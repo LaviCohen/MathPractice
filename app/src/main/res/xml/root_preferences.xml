@@ -1,0 +1,22 @@
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:key="level"
+        app:title="Your Current Level"
+        app:defaultValue="1"
+        />
+    <SwitchPreferenceCompat
+        app:key="autoLevelUp"
+        app:defaultValue="true"
+        app:title="Auto Level-Up"/>
+
+    <ListPreference
+        app:key="calculation"
+        app:title="Calculated Scores History of Levels"
+        app:defaultValue="10"
+        app:summary="%s"
+        app:entries="@array/CalculationsNames"
+        app:entryValues="@array/CalculationValues"
+        />
+</PreferenceScreen>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/trinom_menu_option"
+        android:icon="@drawable/ic_trinom_foreground"
+        android:title="@string/trinom"
+        />
+    <item
+        android:id="@+id/mul_table_menu_option"
+        android:icon="@drawable/ic_mul_table_foreground"
+        android:title="@string/mul_table"
+        />
+</menu>
