@@ -4,6 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:textAlignment="center"
     tools:context=".activities.MainActivity">
 
+    <ImageView
+        android:id="@+id/ivAppLogo"
+        android:layout_width="252dp"
+        android:layout_height="255dp"
+        android:alpha="0"
+        android:translationX="-880px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_app_icon" />
+
+    <TextView
+        android:id="@+id/tvSubText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Math Practice App\nThe place to practice math"
+        android:textSize="30sp"
+        android:alpha="0"
+        android:translationY="300px"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivAppLogo" />
+
+    <Button
+        android:id="@+id/bLetsGo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Let's Go!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
