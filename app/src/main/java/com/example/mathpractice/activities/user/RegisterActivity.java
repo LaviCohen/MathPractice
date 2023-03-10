@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,6 +19,8 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.mathpractice.R;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
+
+import java.io.IOException;
 
 public class RegisterActivity extends Activity {
 	private static final int CAMERA_REQUEST = 1888;
@@ -36,13 +39,13 @@ public class RegisterActivity extends Activity {
 				if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 					requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
 				} else {
-					ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
-					Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-					startActivityForResult(cameraIntent, CAMERA_REQUEST);
+					imageChooser();
+//					ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+//					Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//					startActivityForResult(cameraIntent, CAMERA_REQUEST);
 				}
 			} else {
-				Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-				startActivityForResult(cameraIntent, CAMERA_REQUEST);
+				imageChooser();
 			}
 		});
 		EditText username = findViewById(R.id.editTextUsername);
@@ -83,13 +86,50 @@ public class RegisterActivity extends Activity {
 		}
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected void oldonActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
 			Bitmap photo = (Bitmap) data.getExtras().get("data");
 			bitmap = photo;
 			System.out.println("Photo size:" + photo.getWidth() + ", " + photo.getHeight());
 			imageView.setImageBitmap(photo);
+		}
+	}
+	int SELECT_PICTURE = 200;
+	private void imageChooser() {
+
+		// create an instance of the
+		// intent of the type image
+		Intent i = new Intent();
+		i.setType("image/*");
+		i.setAction(Intent.ACTION_GET_CONTENT);
+
+		// pass the constant to compare it
+		// with the returned requestCode
+		startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+	}
+
+	// this function is triggered when user
+	// selects the image from the imageChooser
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (resultCode == RESULT_OK) {
+
+			// compare the resultCode with the
+			// SELECT_PICTURE constant
+			if (requestCode == SELECT_PICTURE) {
+				// Get the url of the image from data
+				Uri selectedImageUri = data.getData();
+				if (null != selectedImageUri) {
+					imageView.setImageURI(selectedImageUri);
+					try {
+						bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+						System.out.println("Photo size:" + bitmap.getWidth() + ", " + bitmap.getHeight());
+					} catch (IOException e) {
+						Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
+					}
+				}
+			}
 		}
 	}
 }

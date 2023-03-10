@@ -52,17 +52,23 @@ public class UserPageActivity extends AppCompatActivity {
 			c.moveToFirst();
 			@SuppressLint("Range") int id = c.getInt(c.getColumnIndex("hat_ID"));
 			c.close();
-			if (id != -1) {
+			c = new DataBaseHelper(this).execSQLForReading(
+					"SELECT hat_size FROM users WHERE username = '" + username + "';");
+			c.moveToFirst();
+			@SuppressLint("Range") int hatSize = c.getInt(c.getColumnIndex("hat_size"));
+			c.close();
+			if (id != -1 && hatSize != 0) {
 				System.out.println(id);
-				Drawable drawable = getResources().getDrawable(R.mipmap.ic_crown);
-				Bitmap rawHat = Bitmap.createBitmap(drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-				drawable.draw(new Canvas(rawHat));
-
-				System.out.println(rawHat);
-				Bitmap hat = Bitmap.createScaledBitmap(rawHat, 100, 100, false);
-				Bitmap bmOverlay = Bitmap.createBitmap(usersImage.getWidth(), usersImage.getHeight(), usersImage.getConfig());
-				Canvas canvas = new Canvas(bmOverlay);
-				canvas.drawBitmap(usersImage, 0, 0, null);
+				@SuppressLint("UseCompatLoadingForDrawables")
+				Drawable drawable = getResources().getDrawable(R.mipmap.ic_crown_foreground);
+				Bitmap hatBitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+				drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+				drawable.draw(new Canvas(hatBitmap));
+				hatBitmap = Bitmap.createScaledBitmap(hatBitmap, hatSize, hatSize, false);
+				System.out.println("Hat size:" + hatBitmap.getWidth() + ", " + hatBitmap.getHeight());
+				System.out.println(hatBitmap);
+				Bitmap copy = usersImage.copy(Bitmap.Config.ARGB_8888, true);
+				Canvas canvas = new Canvas(copy);
 				c = new DataBaseHelper(this).execSQLForReading(
 						"SELECT hat_x FROM users WHERE username = '" + username + "';");
 				c.moveToFirst();
@@ -73,10 +79,11 @@ public class UserPageActivity extends AppCompatActivity {
 				c.moveToFirst();
 				@SuppressLint("Range") int hatY = c.getInt(c.getColumnIndex("hat_y"));
 				c.close();
-				int x = hatX - hat.getWidth()/2;
-				int y = hatY - hat.getHeight();
-				System.out.println(hatX + "," + hatY + ", " +  x + ", " + y);
-				canvas.drawBitmap(hat, x, y, null);
+				int x = hatX - hatBitmap.getWidth()/2;
+				int y = hatY - hatBitmap.getHeight();
+				System.out.println("Face Data: " + hatX + "," + hatY + ", " +  x + ", " + y);
+				canvas.drawBitmap(hatBitmap, x, y, null);
+				usersImage = copy;
 			}
 			ImageView profileImage = findViewById(R.id.profile_image);
 			profileImage.setImageBitmap(usersImage);

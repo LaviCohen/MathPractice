@@ -39,7 +39,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(query);
         query = "CREATE TABLE practices_done_type_1_user_Local (id INTEGER PRIMARY KEY AUTOINCREMENT, level INTEGER, practice TEXT, success INTEGER);";
         sqLiteDatabase.execSQL(query);
-        query = "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, profile_image BLOB, hat_x INTEGER, hat_y INTEGER, hat_ID INTEGER, level_type_0 INTEGER, level_type_1 INTEGER);";
+        query = "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, profile_image BLOB, hat_x INTEGER, hat_y INTEGER, hat_size INTEGER, hat_ID INTEGER, level_type_0 INTEGER, level_type_1 INTEGER);";
         sqLiteDatabase.execSQL(query);
     }
 
@@ -60,7 +60,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put("level_type_0", 1);
         cv.put("level_type_1", 1);
         cv.put("profile_image", getBytesFromBitmap(image));
-        System.out.println( image.getWidth() + ", " + image.getHeight());
+        System.out.println("Image Size: " +  image.getWidth() + ", " + image.getHeight());
         Point p = new Point(-1, -1);
         InputImage inputImage = InputImage.fromBitmap(image, rotationDegs);
 
@@ -82,17 +82,24 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                                         Rect faceRect = faces.get(0).getBoundingBox();
                                         p.x = faceRect.centerX();
                                         p.y = faceRect.top;
+                                        DataBaseHelper.this.execSQLForWriting(
+                                                "UPDATE users SET hat_x = " + p.x  + ", hat_y = " + p.y
+                                                         + ", hat_size = " + faceRect.width() * 0.8
+                                                 + " WHERE username = '" + username + "';"
+                                        );
+                                        System.out.println("Data Updated, " + p.toString());
                                     }
                                 })
                         .addOnFailureListener(
                                 new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-
+                                        System.out.println("Failed to detect face");
                                     }
                                 });
         cv.put("hat_x", p.x);
         cv.put("hat_y", p.y);
+        cv.put("hat_size", 0);
         cv.put("hat_ID", R.mipmap.ic_crown);
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.insert("users", null, cv);
