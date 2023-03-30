@@ -5,11 +5,12 @@ public abstract class AbstractPractice {
 	public static final int TYPE_TRINOM = 0;
 	public static final int TYPE_MUL_TABLE = 1;
 
-	int type;
-	int level;
+	final int type;
+	final int level;
 
 
 	public AbstractPractice(int type, int level) {
+		this.type = type;
 		this.level = level;
 	}
 

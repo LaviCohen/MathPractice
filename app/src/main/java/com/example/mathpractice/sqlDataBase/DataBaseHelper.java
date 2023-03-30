@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import com.example.mathpractice.R;
 import com.example.mathpractice.math.AbstractPractice;
 
+import com.example.mathpractice.math.MulTable;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -121,7 +122,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put("practice", practice.toExp());
         cv.put("success", success);
         System.out.println("Inserting " + cv.toString());
-        db.insert("practices_done_type_" + practice.getType() + "_user_" + user, null, cv);
+        if (practice instanceof MulTable) {
+            System.out.println("Mul");
+        }
+        String table = "practices_done_type_" + practice.getType() + "_user_" + user;
+        System.out.println("Table: " + table);
+        db.insert(table, null, cv);
     }
 
     public void execSQLForWriting(String query) {
