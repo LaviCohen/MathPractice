@@ -80,12 +80,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                                 new OnSuccessListener<List<Face>>() {
                                     @Override
                                     public void onSuccess(List<Face> faces) {
+                                        if (faces.isEmpty()) {
+                                            System.out.println("No face was detected");
+                                            return;
+                                        }
                                         Rect faceRect = faces.get(0).getBoundingBox();
                                         p.x = faceRect.centerX();
-                                        p.y = faceRect.top;
+                                        p.y = faceRect.top + 200;
                                         DataBaseHelper.this.execSQLForWriting(
                                                 "UPDATE users SET hat_x = " + p.x  + ", hat_y = " + p.y
-                                                         + ", hat_size = " + faceRect.width() * 0.8
+                                                         + ", hat_size = " + faceRect.width() * 1.3
                                                  + " WHERE username = '" + username + "';"
                                         );
                                         System.out.println("Data Updated, " + p.toString());
@@ -101,7 +105,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put("hat_x", p.x);
         cv.put("hat_y", p.y);
         cv.put("hat_size", 0);
-        cv.put("hat_ID", R.mipmap.ic_crown);
+        cv.put("hat_ID", -1);
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.insert("users", null, cv);
         String query = "CREATE TABLE practices_done_type_0_user_" + username + " (id INTEGER PRIMARY KEY AUTOINCREMENT, level INTEGER, practice TEXT, success INTEGER);";

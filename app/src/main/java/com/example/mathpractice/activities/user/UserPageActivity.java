@@ -10,84 +10,106 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.practice.PracticeActivity;
+import com.example.mathpractice.activities.scores.ScoresActivity;
 import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 
 public class UserPageActivity extends AppCompatActivity {
 
 	@SuppressLint("SetTextI18n")
+	private String username;
+	private Bitmap baseUsersImage;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_page);
 		setTitle("User");
-		String username = PreferenceManager.getDefaultSharedPreferences(this)
+		username = PreferenceManager.getDefaultSharedPreferences(this)
 				.getString("user", "Local");
 		((TextView)findViewById(R.id.username_field)).setText(username);
 		((TextView) findViewById(R.id.user_level_field)).setText("Level: " + SettingsActivity.getUserGeneralLevel(this));
-		Bitmap usersImage = null;
+		baseUsersImage = null;
 		if (!username.equals("Local")) {
 			Cursor c = new DataBaseHelper(this).execSQLForReading(
 					"SELECT profile_image FROM users WHERE username = '" + username + "';");
 			c.moveToFirst();
 			@SuppressLint("Range") byte[] bitmapArr = c.getBlob(c.getColumnIndex("profile_image"));
 			c.close();
-			usersImage = BitmapFactory.decodeByteArray(bitmapArr, 0, bitmapArr.length);
+			baseUsersImage = BitmapFactory.decodeByteArray(bitmapArr, 0, bitmapArr.length);
 		}
-		if (usersImage != null) {
-			Cursor c = new DataBaseHelper(this).execSQLForReading(
-					"SELECT hat_ID FROM users WHERE username = '" + username + "';");
-			c.moveToFirst();
-			@SuppressLint("Range") int id = c.getInt(c.getColumnIndex("hat_ID"));
-			c.close();
-			c = new DataBaseHelper(this).execSQLForReading(
-					"SELECT hat_size FROM users WHERE username = '" + username + "';");
-			c.moveToFirst();
-			@SuppressLint("Range") int hatSize = c.getInt(c.getColumnIndex("hat_size"));
-			c.close();
-			if (id != -1 && hatSize != 0) {
-				System.out.println(id);
-				@SuppressLint("UseCompatLoadingForDrawables")
-				Drawable drawable = getResources().getDrawable(R.mipmap.ic_crown_foreground);
-				Bitmap hatBitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-				drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-				drawable.draw(new Canvas(hatBitmap));
-				hatBitmap = Bitmap.createScaledBitmap(hatBitmap, hatSize, hatSize, false);
-				System.out.println("Hat size:" + hatBitmap.getWidth() + ", " + hatBitmap.getHeight());
-				System.out.println(hatBitmap);
-				Bitmap copy = usersImage.copy(Bitmap.Config.ARGB_8888, true);
-				Canvas canvas = new Canvas(copy);
-				c = new DataBaseHelper(this).execSQLForReading(
-						"SELECT hat_x FROM users WHERE username = '" + username + "';");
-				c.moveToFirst();
-				@SuppressLint("Range") int hatX = c.getInt(c.getColumnIndex("hat_x"));
-				c.close();
-				c = new DataBaseHelper(this).execSQLForReading(
-						"SELECT hat_y FROM users WHERE username = '" + username + "';");
-				c.moveToFirst();
-				@SuppressLint("Range") int hatY = c.getInt(c.getColumnIndex("hat_y"));
-				c.close();
-				int x = hatX - hatBitmap.getWidth()/2;
-				int y = hatY - hatBitmap.getHeight();
-				System.out.println("Face Data: " + hatX + "," + hatY + ", " +  x + ", " + y);
-				canvas.drawBitmap(hatBitmap, x, y, null);
-				usersImage = copy;
+		if (baseUsersImage != null) {
+			updateUserImageNHat();
+			int userLevel = SettingsActivity.getUserGeneralLevel(this);
+			LinearLayout hatLinearLayout;
+			hatLinearLayout = findViewById(R.id.ll_brown_hat);
+			hatLinearLayout.setOnClickListener(v -> changeUserHat(R.mipmap.ic_brown_hat_foreground));
+			hatLinearLayout = findViewById(R.id.ll_black_hat);
+			if (userLevel < 2) {
+				ImageView hatPicture =
+						((ImageView)((FrameLayout)hatLinearLayout.getChildAt(0)).getChildAt(0));
+				ColorMatrix matrix = new ColorMatrix();
+				matrix.setSaturation(0);
+				ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+				hatPicture.setColorFilter(filter);
+			} else {
+				((FrameLayout)hatLinearLayout.getChildAt(0)).getChildAt(1).setVisibility(View.INVISIBLE);
+				hatLinearLayout.setOnClickListener(v -> changeUserHat(R.mipmap.ic_black_hat_foreground));
 			}
-			ImageView profileImage = findViewById(R.id.profile_image);
-			profileImage.setImageBitmap(usersImage);
+			hatLinearLayout = findViewById(R.id.ll_pirates_hat);
+			if (userLevel < 3) {
+				ImageView hatPicture =
+						((ImageView)((FrameLayout)hatLinearLayout.getChildAt(0)).getChildAt(0));
+				ColorMatrix matrix = new ColorMatrix();
+				matrix.setSaturation(0);
+				ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+				hatPicture.setColorFilter(filter);
+			} else {
+				((FrameLayout)hatLinearLayout.getChildAt(0)).getChildAt(1).setVisibility(View.INVISIBLE);
+				hatLinearLayout.setOnClickListener(v -> changeUserHat(R.mipmap.ic_pirates_hat_foreground));
+			}
+			hatLinearLayout = findViewById(R.id.ll_magician_hat);
+			if (userLevel < 4) {
+				ImageView hatPicture =
+						((ImageView)((FrameLayout)hatLinearLayout.getChildAt(0)).getChildAt(0));
+				ColorMatrix matrix = new ColorMatrix();
+				matrix.setSaturation(0);
+				ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+				hatPicture.setColorFilter(filter);
+			} else {
+				((FrameLayout)hatLinearLayout.getChildAt(0)).getChildAt(1).setVisibility(View.INVISIBLE);
+				hatLinearLayout.setOnClickListener(v -> changeUserHat(R.mipmap.ic_magician_hat_foreground));
+			}
+			hatLinearLayout = findViewById(R.id.ll_crown);
+			if (userLevel < 5) {
+				ImageView hatPicture =
+						((ImageView)((FrameLayout)hatLinearLayout.getChildAt(0)).getChildAt(0));
+				ColorMatrix matrix = new ColorMatrix();
+				matrix.setSaturation(0);
+				ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+				hatPicture.setColorFilter(filter);
+			} else {
+				((FrameLayout)hatLinearLayout.getChildAt(0)).getChildAt(1).setVisibility(View.INVISIBLE);
+				hatLinearLayout.setOnClickListener(v -> changeUserHat(R.mipmap.ic_crown_foreground));
+			}
 		}
+
 		Button register = findViewById(R.id.newUser);
 		register.setOnClickListener(v ->
 				startActivity(new Intent(UserPageActivity.this, RegisterActivity.class)));
@@ -95,6 +117,59 @@ public class UserPageActivity extends AppCompatActivity {
 		login.setOnClickListener(v ->
 				startActivity(new Intent(UserPageActivity.this, LoginActivity.class)));
 	}
+	private void changeUserHat(int id) {
+		setUserHatId(id);
+		updateUserImageNHat();
+	}
+	private void setUserHatId(int id) {
+		new DataBaseHelper(this).execSQLForWriting(
+				"UPDATE users SET hat_ID = " + id + " WHERE username = '" + username + "';");
+	}
+
+	private void updateUserImageNHat() {
+		Cursor c = new DataBaseHelper(this).execSQLForReading(
+				"SELECT hat_ID FROM users WHERE username = '" + username + "';");
+		c.moveToFirst();
+		@SuppressLint("Range") int id = c.getInt(c.getColumnIndex("hat_ID"));
+		c.close();
+		c = new DataBaseHelper(this).execSQLForReading(
+				"SELECT hat_size FROM users WHERE username = '" + username + "';");
+		c.moveToFirst();
+		@SuppressLint("Range") int hatSize = c.getInt(c.getColumnIndex("hat_size"));
+		c.close();
+		Bitmap imageToDisplay = baseUsersImage;
+		if (id != -1 && hatSize != 0) {
+			System.out.println(id);
+			@SuppressLint("UseCompatLoadingForDrawables")
+			Drawable drawable = getResources().getDrawable(id);
+			Bitmap hatBitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+			drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+			drawable.draw(new Canvas(hatBitmap));
+			hatBitmap = Bitmap.createScaledBitmap(hatBitmap, hatSize, hatSize, false);
+			System.out.println("Hat size:" + hatBitmap.getWidth() + ", " + hatBitmap.getHeight());
+			System.out.println(hatBitmap);
+			Bitmap copy = baseUsersImage.copy(Bitmap.Config.ARGB_8888, true);
+			Canvas canvas = new Canvas(copy);
+			c = new DataBaseHelper(this).execSQLForReading(
+					"SELECT hat_x FROM users WHERE username = '" + username + "';");
+			c.moveToFirst();
+			@SuppressLint("Range") int hatX = c.getInt(c.getColumnIndex("hat_x"));
+			c.close();
+			c = new DataBaseHelper(this).execSQLForReading(
+					"SELECT hat_y FROM users WHERE username = '" + username + "';");
+			c.moveToFirst();
+			@SuppressLint("Range") int hatY = c.getInt(c.getColumnIndex("hat_y"));
+			c.close();
+			int x = hatX - hatBitmap.getWidth()/2;
+			int y = hatY - hatBitmap.getHeight();
+			System.out.println("Face Data: " + hatX + "," + hatY + ", " +  x + ", " + y);
+			canvas.drawBitmap(hatBitmap, x, y, null);
+			imageToDisplay = copy;
+		}
+		ImageView profileImage = findViewById(R.id.profile_image);
+		profileImage.setImageBitmap(imageToDisplay);
+	}
+
 
 	@Override
 	public void onBackPressed() {
