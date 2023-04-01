@@ -38,31 +38,36 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/takePhotoButton"
+        android:id="@+id/PickFromGalleryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/take_photo"
+        android:layout_marginTop="50dp"
+        android:text="Pick From Gallery"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myPhoto" />
+
     <EditText
         android:id="@+id/editTextUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autofillHints="username"
         android:ems="10"
         android:hint="@string/username"
-        android:textSize="25sp"
         android:inputType="textPersonName"
+        android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        android:autofillHints="username" />
+        app:layout_constraintTop_toBottomOf="@+id/takePhotoButton" />
+
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:autofillHints="password"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
@@ -70,8 +75,25 @@
         app:layout_constraintBottom_toTopOf="@+id/finish_reg_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/takePhotoButton"
-        android:autofillHints="password" />
+        app:layout_constraintTop_toBottomOf="@+id/PickFromGalleryButton" />
+
+    <Button
+        android:id="@+id/takePhotoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/take_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PickFromGalleryButton" />
+
+    <Button
+        android:id="@+id/rotateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rotate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myPhoto" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
