@@ -39,5 +39,8 @@
     <string name="my_profile">my profile</string>
     <string name="user_s_image">User\'s Image</string>
     <string name="login">Login</string>
+    <string name="level_dots">Level:</string>
+    <string name="practice_dots">Practice:</string>
+    <string name="score_dots">Score:</string>
 
 </resources>

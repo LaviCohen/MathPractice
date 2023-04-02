@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.practice.PracticeActivity;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
+import com.example.mathpractice.activities.scores.LevelsRecViewAdapter.Level;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -47,33 +48,27 @@ public class ScoresActivity extends AppCompatActivity {
 		}
 		setTitle("Scores");
 
-		((CheckBox)findViewById(R.id.checkBox)).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				full = ((CheckBox)view).isChecked();
-				showScoresForType(type);
-			}
+		findViewById(R.id.checkBox).setOnClickListener(view -> {
+			full = ((CheckBox)view).isChecked();
+			showScoresForType(type);
 		});
 		BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_scores_menu);
-		bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-			@Override
-			public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+		bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
 
-				int newType = -1;
+			int newType = -1;
 
-				if (item.getItemId() == R.id.trinom_menu_option) {
-					newType = 0;
-				} else if (item.getItemId() == R.id.mul_table_menu_option) {
-					newType = 1;
-				}
-
-				if (type != newType) {
-					type = newType;
-					showScoresForType(type);
-				}
-
-				return true;
+			if (item.getItemId() == R.id.trinom_menu_option) {
+				newType = 0;
+			} else if (item.getItemId() == R.id.mul_table_menu_option) {
+				newType = 1;
 			}
+
+			if (type != newType) {
+				type = newType;
+				showScoresForType(type);
+			}
+
+			return true;
 		});
 
 		type = getIntent().getIntExtra("type", 0);
@@ -90,7 +85,7 @@ public class ScoresActivity extends AppCompatActivity {
 			noDataTextView = null;
 		}
 		RecyclerView recView = findViewById(R.id.scores_list);
-		ScoresRecViewAdapter scoresRecViewAdapter = new ScoresRecViewAdapter();
+		RecyclerView.Adapter recViewAdapter = null;
 		user = PreferenceManager.getDefaultSharedPreferences(this).getString("user", "Local");
 		Cursor c = this.dataBase.execSQLForReading("SELECT MAX(level) FROM practices_done_type_" + type + "_user_" + user);
 		c.moveToFirst();
@@ -112,13 +107,15 @@ public class ScoresActivity extends AppCompatActivity {
 			return;
 		}
 
-		ArrayList<Score> list = new ArrayList<>();
+		ArrayList list = new ArrayList<>();
 
 		if (!full) {
+			recViewAdapter = new LevelsRecViewAdapter();
 			for (int i = 0; i < maxLevel; i++){
-				list.add(new Score(i + 1 + "", scores[type][i] + ""));
+				list.add(new Level(i + 1 + "", scores[type][i] + ""));
 			}
 		} else {
+			recViewAdapter = new PracticesRecViewAdapter();
 			c = this.dataBase.execSQLForReading("SELECT * FROM practices_done_type_" + type + "_user_" + user);
 			c.moveToFirst();
 			boolean cont = true;
@@ -126,15 +123,21 @@ public class ScoresActivity extends AppCompatActivity {
 				if (c.isLast()) {
 					cont = false;
 				}
-				list.add(new Score(c.getString(c.getColumnIndex("success")), c.getString(c.getColumnIndex("practice"))));
+				list.add(new PracticesRecViewAdapter.Practice(c.getString(c.getColumnIndex("practice")),
+						Integer.parseInt(c.getString(c.getColumnIndex("level"))),
+						c.getString(c.getColumnIndex("success")).equals("1")));
 				c.moveToNext();
 			}
 			c.close();
 		}
 
-		scoresRecViewAdapter.setScores(list);
+		if (recViewAdapter instanceof LevelsRecViewAdapter) {
+			((LevelsRecViewAdapter)recViewAdapter).setLevels((ArrayList<Level>) list);
+		} else {
+			((PracticesRecViewAdapter)recViewAdapter).setPractices((ArrayList<PracticesRecViewAdapter.Practice>) list);
+		}
 
-		recView.setAdapter(scoresRecViewAdapter);
+		recView.setAdapter(recViewAdapter);
 		recView.setVisibility(View.VISIBLE);
 		recView.setLayoutManager(new LinearLayoutManager(this));
 	}
