@@ -1,5 +1,6 @@
 package com.example.mathpractice.sqlDataBase;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -32,6 +33,35 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, "math_practice_db", null, 1);
+    }
+
+    public static Rect getHatRect(DataBaseHelper dbh, String username){
+        Cursor c = dbh.execSQLForReading(
+                "SELECT hat_ID FROM users WHERE username = '" + username + "';");
+        c.moveToFirst();
+        @SuppressLint("Range") int id = c.getInt(c.getColumnIndex("hat_ID"));
+        c.close();
+        c = dbh.execSQLForReading(
+                "SELECT hat_size FROM users WHERE username = '" + username + "';");
+        c.moveToFirst();
+        @SuppressLint("Range") int hatSize = c.getInt(c.getColumnIndex("hat_size"));
+        c.close();
+        if (id != -1 && hatSize != 0) {
+            c = dbh.execSQLForReading(
+                    "SELECT hat_x FROM users WHERE username = '" + username + "';");
+            c.moveToFirst();
+            @SuppressLint("Range") int hatX = c.getInt(c.getColumnIndex("hat_x"));
+            c.close();
+            c = dbh.execSQLForReading(
+                    "SELECT hat_y FROM users WHERE username = '" + username + "';");
+            c.moveToFirst();
+            @SuppressLint("Range") int hatY = c.getInt(c.getColumnIndex("hat_y"));
+            c.close();
+            int x = hatX - hatSize/2;
+            int y = hatY - hatSize;
+            return new Rect(x, y, hatSize, id);
+        }
+        return null;
     }
 
     @Override
