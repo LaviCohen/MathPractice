@@ -30,6 +30,10 @@ public class PictureUtilities {
 
 	public static Bitmap putHat(Context context, String username, Bitmap baseUsersImage){
 		Rect hatRect = DataBaseHelper.getHatRect(new DataBaseHelper(context), username);
+		if (hatRect == null) {
+			System.out.println("No hat rect");
+			return baseUsersImage;
+		}
 		int id = hatRect.bottom, hatSize = hatRect.right, hatX = hatRect.left, hatY = hatRect.top;
 		Bitmap imageToDisplay = baseUsersImage;
 		if (id != -1 && hatSize != 0) {

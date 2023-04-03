@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -58,10 +59,13 @@ public class UserPageActivity extends AppCompatActivity {
 					R.mipmap.ic_crown_foreground};
 			for (int i = 0; i < parentHatsLinearLayout.getChildCount(); i++){
 				hatLinearLayout = (LinearLayout) parentHatsLinearLayout.getChildAt(i);
+				ImageView hatPicture =
+						((ImageView)((FrameLayout)hatLinearLayout.getChildAt(0)).getChildAt(0));
 				if (userLevel < i + 1) {
-					ImageView hatPicture =
-							((ImageView)((FrameLayout)hatLinearLayout.getChildAt(0)).getChildAt(0));
 					PictureUtilities.makeBlackNwhite(hatPicture);
+				} else {
+					((FrameLayout)hatLinearLayout.getChildAt(0)).getChildAt(1).
+							setVisibility(View.INVISIBLE);
 					int finalI = i;
 					hatLinearLayout.setOnClickListener(v ->
 							changeUserHat(hats[finalI]));
@@ -85,6 +89,7 @@ public class UserPageActivity extends AppCompatActivity {
 	}
 
 	private void updateUserImageNHat() {
+		System.out.println("Updating hat");
 		Bitmap imageToDisplay = PictureUtilities.putHat(this, username, baseUsersImage);
 		ImageView profileImage = findViewById(R.id.profile_image);
 		profileImage.setImageBitmap(imageToDisplay);

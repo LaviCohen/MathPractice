@@ -25,7 +25,7 @@ public class TrinomFragment extends AbstractPracticeFragment{
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		return super.startFragment(inflater, container, savedInstanceState, R.layout.fragment_trinom);
+		return super.startFragment(inflater, container, R.layout.fragment_trinom);
 	}
 
 	@Override

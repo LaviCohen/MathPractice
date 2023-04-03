@@ -21,7 +21,7 @@ public class MulTableFragment extends AbstractPracticeFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return super.startFragment(inflater, container, savedInstanceState, R.layout.fragment_mul_table);
+		return super.startFragment(inflater, container, R.layout.fragment_mul_table);
 	}
 
 	@Override

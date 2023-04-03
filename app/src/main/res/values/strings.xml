@@ -42,5 +42,7 @@
     <string name="level_dots">Level:</string>
     <string name="practice_dots">Practice:</string>
     <string name="score_dots">Score:</string>
+    <string name="remind_me_in">Remind me in</string>
+    <string name="minutes">minutes</string>
 
 </resources>

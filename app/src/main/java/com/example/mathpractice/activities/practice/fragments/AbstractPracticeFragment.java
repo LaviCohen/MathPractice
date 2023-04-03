@@ -1,7 +1,6 @@
 package com.example.mathpractice.activities.practice.fragments;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.example.mathpractice.activities.practice.PracticeActivity;
 import com.example.mathpractice.activities.scores.ScoresActivity;
 import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.math.AbstractPractice;
-import com.example.mathpractice.math.Trinom;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 
 public abstract class AbstractPracticeFragment extends Fragment {
@@ -30,9 +28,9 @@ public abstract class AbstractPracticeFragment extends Fragment {
 	protected DataBaseHelper dataBase;
 
 	public View startFragment(LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState, int layout) {
+							  int layout) {
 		View parentView = inflater.inflate(layout, container, false);
-		dataBase = ((PracticeActivity)getActivity()).dataBase;
+		dataBase = ((PracticeActivity) requireActivity()).dataBase;
 		textView = parentView.findViewById(R.id.textView);
 		check = parentView.findViewById(R.id.check);
 		check.setOnClickListener(view -> {
@@ -51,12 +49,14 @@ public abstract class AbstractPracticeFragment extends Fragment {
 						textView.setText(R.string.well_done);
 					}
 					dataBase.addPractice(currentPractice, PreferenceManager.getDefaultSharedPreferences(
-							AbstractPracticeFragment.this.getContext()).getString("user", "Local"), checkValue == 1);
+							AbstractPracticeFragment.this.requireContext()).getString("user", "Local"), checkValue == 1);
 					check.setText(R.string.next);
-					String calculation = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("calculation", "all");
+					String calculation = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("calculation", "all");
 					boolean levelUp = ScoresActivity.updateScores(currentPractice.getLevel(), currentPractice.getType(), this.getContext(), calculation);
 					if (levelUp) {
-						Toast.makeText(this.getContext(), "Level-Up!", Toast.LENGTH_SHORT).show();
+						Toast.makeText(this.getContext(), "Level-Up! You're on level " +
+								SettingsActivity.getUserGeneralLevel(AbstractPracticeFragment.this.getContext())
+										+ " now!", Toast.LENGTH_SHORT).show();
 					}
 				}
 			}

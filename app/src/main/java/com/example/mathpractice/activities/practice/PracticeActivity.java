@@ -1,5 +1,6 @@
 package com.example.mathpractice.activities.practice;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.NumberPicker;
 
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.practice.fragments.MulTableFragment;
@@ -20,6 +22,8 @@ import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.service.ReminderService;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class PracticeActivity extends AppCompatActivity {
 
@@ -40,8 +44,23 @@ public class PracticeActivity extends AppCompatActivity {
 		Button remindMeLaterButton = findViewById(R.id.remind_me_later_button);
 
 		remindMeLaterButton.setOnClickListener(view -> {
-			Intent serviceIntent = new Intent(PracticeActivity.this, ReminderService.class);
-			startService(serviceIntent);
+			Dialog d = new Dialog(PracticeActivity.this);
+			d.setTitle("Pick Number");
+			d.setContentView(R.layout.number_picker_dialog_layout);
+			Button ok = d.findViewById(R.id.ok_button);
+			Button cancel = d.findViewById(R.id.cancel_button);
+			NumberPicker np = d.findViewById(R.id.number_picker);
+			np.setMinValue(0);
+			np.setMaxValue(300);
+			np.setValue(5);
+			ok.setOnClickListener(v -> {
+				Intent serviceIntent = new Intent(PracticeActivity.this, ReminderService.class);
+				serviceIntent.putExtra("minutes", np.getValue());
+				startService(serviceIntent);
+				d.dismiss();
+			});
+			cancel.setOnClickListener(v -> d.dismiss());
+			d.show();
 		});
 
 		BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_practice_menu);

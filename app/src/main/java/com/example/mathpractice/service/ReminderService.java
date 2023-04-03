@@ -1,5 +1,6 @@
 package com.example.mathpractice.service;
 
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.Service;
 import android.content.ContextParams;
@@ -15,16 +16,21 @@ public class ReminderService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		new Thread(() -> {
-			try {
-				Thread.sleep(1000*2*5);
-				MyNotificationManager.postNotification(ReminderService.this, R.drawable.ic_back,
-						"Return", "Return to practice... (;");
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			stopSelf();
-		}).start();
+		int minutes = intent.getIntExtra("minutes", -1);
+		if (minutes == -1) {
+			System.out.println("Error");
+		}else {
+			new Thread(() -> {
+				try {
+					Thread.sleep(minutes * 60_000);
+					MyNotificationManager.postNotification(ReminderService.this, R.drawable.ic_back,
+							"Return", "Return to practice... (;");
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				stopSelf();
+			}).start();
+		}
 
 		return super.onStartCommand(intent, flags, startId);
 	}
