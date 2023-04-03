@@ -13,7 +13,17 @@ import android.widget.ImageView;
 
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 
+/**
+ * Static utility class for picture editing.
+ * */
 public class PictureUtilities {
+
+	/**
+	 * This method rotates the given bitmap by the given degrees.
+	 * @param source the bitmap to rotate.
+	 * @param angle the rotation angle.
+	 * @return rotated bitmap.
+	 * */
 	public static Bitmap rotateBitmap(Bitmap source, float angle)
 	{
 		Matrix matrix = new Matrix();
@@ -21,6 +31,10 @@ public class PictureUtilities {
 		return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
 	}
 
+	/**
+	 * This method affect an {@link ImageView} to black & white effect.
+	 * @param picture the {@link ImageView} to affect.
+	 * */
 	public static void makeBlackNwhite(ImageView picture) {
 		ColorMatrix matrix = new ColorMatrix();
 		matrix.setSaturation(0);
@@ -28,6 +42,13 @@ public class PictureUtilities {
 		picture.setColorFilter(filter);
 	}
 
+	/**
+	 * This method put the correct hat on the user's face in the bitmap given.
+	 * @param context the context which is now active.
+	 * @param username the current logged-in user.
+	 * @param baseUsersImage the base image to put hat on.
+	 * @return a bitmap of the base image with the required hat.
+	 * */
 	public static Bitmap putHat(Context context, String username, Bitmap baseUsersImage){
 		Rect hatRect = DataBaseHelper.getHatRect(new DataBaseHelper(context), username);
 		if (hatRect == null) {
