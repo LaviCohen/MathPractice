@@ -46,7 +46,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 				int maxLevel = c.getInt(c.getColumnIndex("MAX(level)"));
 				c.close();
 				for (int j = 0; j < maxLevel; j++) {
-					ScoresActivity.updateScores(j + 1, i, this.getContext(), newValue.toString());
+					DataBaseHelper.updateScores(j + 1, i, this.getContext(), newValue.toString());
 				}
 			}
 			return true;

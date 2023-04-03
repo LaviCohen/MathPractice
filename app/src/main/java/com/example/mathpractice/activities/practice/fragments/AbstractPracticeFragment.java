@@ -52,7 +52,7 @@ public abstract class AbstractPracticeFragment extends Fragment {
 							AbstractPracticeFragment.this.requireContext()).getString("user", "Local"), checkValue == 1);
 					check.setText(R.string.next);
 					String calculation = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("calculation", "all");
-					boolean levelUp = ScoresActivity.updateScores(currentPractice.getLevel(), currentPractice.getType(), this.getContext(), calculation);
+					boolean levelUp = DataBaseHelper.updateScores(currentPractice.getLevel(), currentPractice.getType(), this.getContext(), calculation);
 					if (levelUp) {
 						Toast.makeText(this.getContext(), "Level-Up! You're on level " +
 								SettingsActivity.getUserGeneralLevel(AbstractPracticeFragment.this.getContext())

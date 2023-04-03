@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.mathpractice.R;
-import com.example.mathpractice.notifications.MyNotificationManager;
+import com.example.mathpractice.service.MyNotificationManager;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
 

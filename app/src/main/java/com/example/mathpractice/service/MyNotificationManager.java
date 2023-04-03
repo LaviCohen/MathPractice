@@ -1,4 +1,4 @@
-package com.example.mathpractice.notifications;
+package com.example.mathpractice.service;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

@@ -9,11 +9,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mathpractice.R;
+import com.example.mathpractice.activities.scores.LevelsRecViewAdapter;
+import com.example.mathpractice.activities.scores.PracticesRecViewAdapter;
+import com.example.mathpractice.activities.scores.ScoresActivity;
 import com.example.mathpractice.math.AbstractPractice;
 
 import com.example.mathpractice.math.MulTable;
@@ -27,6 +35,7 @@ import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -166,5 +175,84 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public void execSQLForWriting(String query) {
         this.getWritableDatabase().execSQL(query);
+    }
+
+    @SuppressLint("Range")
+    public RecyclerView.Adapter getAdapter(Context context, int type, boolean full) {
+        RecyclerView.Adapter recViewAdapter = null;
+        String user = PreferenceManager.getDefaultSharedPreferences(context).getString("user", "Local");
+        Cursor c = execSQLForReading("SELECT MAX(level) FROM practices_done_type_" + type + "_user_" + user);
+        c.moveToFirst();
+        @SuppressLint("Range")
+        int maxLevel = c.getInt(c.getColumnIndex("MAX(level)"));
+        c.close();
+
+        if (ScoresActivity.scores == null) {
+            String calculation = PreferenceManager.getDefaultSharedPreferences(context).getString("calculation", "all");
+            for (int i = 0; i < maxLevel; i++) {
+                updateScores(i + 1, type, context, calculation);
+            }
+        }
+        if (maxLevel == 0){
+            return null;
+        }
+
+        ArrayList list = new ArrayList<>();
+
+        if (!full) {
+            recViewAdapter = new LevelsRecViewAdapter();
+            for (int i = 0; i < maxLevel; i++){
+                list.add(new LevelsRecViewAdapter.Level(i + 1 + "", ScoresActivity.scores[type][i] + ""));
+            }
+        } else {
+            recViewAdapter = new PracticesRecViewAdapter();
+            c = this.execSQLForReading("SELECT * FROM practices_done_type_" + type + "_user_" + user);
+            c.moveToFirst();
+            boolean cont = true;
+            while (cont) {
+                if (c.isLast()) {
+                    cont = false;
+                }
+                list.add(new PracticesRecViewAdapter.Practice(c.getString(c.getColumnIndex("practice")),
+                        Integer.parseInt(c.getString(c.getColumnIndex("level"))),
+                        c.getString(c.getColumnIndex("success")).equals("1")));
+                c.moveToNext();
+            }
+            c.close();
+        }
+
+        if (recViewAdapter instanceof LevelsRecViewAdapter) {
+            ((LevelsRecViewAdapter)recViewAdapter).setLevels((ArrayList<LevelsRecViewAdapter.Level>) list);
+        } else {
+            ((PracticesRecViewAdapter)recViewAdapter).setPractices((ArrayList<PracticesRecViewAdapter.Practice>) list);
+        }
+        return recViewAdapter;
+    }
+    public static boolean updateScores(int level, int type, Context context, String calculation) {
+        DataBaseHelper dataBase = new DataBaseHelper(context);
+        if (ScoresActivity.scores == null) {
+            ScoresActivity.scores = new double[3][3];
+        }
+        String user = PreferenceManager.getDefaultSharedPreferences(context).getString("user", "Local");
+        Cursor c = dataBase.execSQLForReading(
+                "SELECT AVG(success) FROM (SELECT success FROM practices_done_type_" + type + "_user_" +
+                        user  + " WHERE level = " + level +
+                        (calculation.equals("all") ? "" : " ORDER BY id DESC limit(" + Integer.parseInt(calculation) + ")") + ")");
+        c.moveToFirst();
+        ScoresActivity.scores[type][level - 1] = ((int)(c.getDouble(0) * 10000))/100.0;
+        c.close();
+        if (level < 3 && ScoresActivity.scores[type][level - 1] > 80.0) {
+            c = dataBase.execSQLForReading("SELECT COUNT(success) FROM (SELECT success FROM practices_done_type_" + type + "_user_" +
+                    user + " WHERE level = " + level + ");");
+            c.moveToFirst();
+            int count = c.getInt(0);
+            c.close();
+            if (count > 5) {
+                dataBase.execSQLForWriting("UPDATE users SET level_type_" + type + " = " + (level + 1)
+                        + " WHERE username = '" + user + "';");
+                return true;
+            }
+        }
+        return false;
     }
 }

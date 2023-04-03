@@ -86,89 +86,17 @@ public class ScoresActivity extends AppCompatActivity {
 			noDataTextView = null;
 		}
 		RecyclerView recView = findViewById(R.id.scores_list);
-		RecyclerView.Adapter recViewAdapter = null;
-		user = PreferenceManager.getDefaultSharedPreferences(this).getString("user", "Local");
-		Cursor c = this.dataBase.execSQLForReading("SELECT MAX(level) FROM practices_done_type_" + type + "_user_" + user);
-		c.moveToFirst();
-		@SuppressLint("Range")
-		int maxLevel = c.getInt(c.getColumnIndex("MAX(level)"));
-		c.close();
-
-		if (scores == null) {
-			String calculation = PreferenceManager.getDefaultSharedPreferences(this).getString("calculation", "all");
-			for (int i = 0; i < maxLevel; i++) {
-				updateScores(i + 1, type, this, calculation);
-			}
-		}
-		if (maxLevel == 0){
+		RecyclerView.Adapter recViewAdapter = dataBase.getAdapter(this, type, full);
+		if (recViewAdapter == null) {
 			noDataTextView = new TextView(this);
 			noDataTextView.setText(R.string.no_data_in_scores_sentence);
 			((ViewGroup)findViewById(R.id.scores_list).getParent()).addView(noDataTextView);
 			recView.setVisibility(View.INVISIBLE);
 			return;
 		}
-
-		ArrayList list = new ArrayList<>();
-
-		if (!full) {
-			recViewAdapter = new LevelsRecViewAdapter();
-			for (int i = 0; i < maxLevel; i++){
-				list.add(new Level(i + 1 + "", scores[type][i] + ""));
-			}
-		} else {
-			recViewAdapter = new PracticesRecViewAdapter();
-			c = this.dataBase.execSQLForReading("SELECT * FROM practices_done_type_" + type + "_user_" + user);
-			c.moveToFirst();
-			boolean cont = true;
-			while (cont) {
-				if (c.isLast()) {
-					cont = false;
-				}
-				list.add(new PracticesRecViewAdapter.Practice(c.getString(c.getColumnIndex("practice")),
-						Integer.parseInt(c.getString(c.getColumnIndex("level"))),
-						c.getString(c.getColumnIndex("success")).equals("1")));
-				c.moveToNext();
-			}
-			c.close();
-		}
-
-		if (recViewAdapter instanceof LevelsRecViewAdapter) {
-			((LevelsRecViewAdapter)recViewAdapter).setLevels((ArrayList<Level>) list);
-		} else {
-			((PracticesRecViewAdapter)recViewAdapter).setPractices((ArrayList<PracticesRecViewAdapter.Practice>) list);
-		}
-
 		recView.setAdapter(recViewAdapter);
 		recView.setVisibility(View.VISIBLE);
 		recView.setLayoutManager(new LinearLayoutManager(this));
-	}
-
-	public static boolean updateScores(int level, int type, Context context, String calculation) {
-		DataBaseHelper dataBase = new DataBaseHelper(context);
-		if (scores == null) {
-			scores = new double[3][3];
-		}
-		String user = PreferenceManager.getDefaultSharedPreferences(context).getString("user", "Local");
-		Cursor c = dataBase.execSQLForReading(
-				"SELECT AVG(success) FROM (SELECT success FROM practices_done_type_" + type + "_user_" +
-						user  + " WHERE level = " + level +
-						(calculation.equals("all") ? "" : " ORDER BY id DESC limit(" + Integer.parseInt(calculation) + ")") + ")");
-		c.moveToFirst();
-		scores[type][level - 1] = ((int)(c.getDouble(0) * 10000))/100.0;
-		c.close();
-		if (level < 3 && scores[type][level - 1] > 80.0) {
-			c = dataBase.execSQLForReading("SELECT COUNT(success) FROM (SELECT success FROM practices_done_type_" + type + "_user_" +
-					user + " WHERE level = " + level + ");");
-			c.moveToFirst();
-			int count = c.getInt(0);
-			c.close();
-			if (count > 5) {
-				dataBase.execSQLForWriting("UPDATE users SET level_type_" + type + " = " + (level + 1)
-						+ " WHERE username = '" + user + "';");
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@Override
