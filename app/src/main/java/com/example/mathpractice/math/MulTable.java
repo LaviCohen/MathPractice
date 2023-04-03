@@ -20,8 +20,8 @@ public class MulTable extends AbstractPractice{
     }
 
     @Override
-    protected void solve(){
-        this.solution = this.a * this.b;
+    protected void solve() {
+        this.solution = round(this.a * this.b, 3);
     }
 
     @Override

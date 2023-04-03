@@ -19,11 +19,10 @@ import com.example.mathpractice.activities.practice.fragments.TrinomFragment;
 import com.example.mathpractice.activities.user.UserPageActivity;
 import com.example.mathpractice.activities.scores.ScoresActivity;
 import com.example.mathpractice.activities.settings.SettingsActivity;
-import com.example.mathpractice.service.ReminderService;
+import com.example.mathpractice.reminder.MyAlarmManager;
+import com.example.mathpractice.reminder.ReminderService;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class PracticeActivity extends AppCompatActivity {
 
@@ -54,9 +53,7 @@ public class PracticeActivity extends AppCompatActivity {
 			np.setMaxValue(300);
 			np.setValue(5);
 			ok.setOnClickListener(v -> {
-				Intent serviceIntent = new Intent(PracticeActivity.this, ReminderService.class);
-				serviceIntent.putExtra("minutes", np.getValue());
-				startService(serviceIntent);
+				MyAlarmManager.setAlarm(PracticeActivity.this, np.getValue());
 				d.dismiss();
 			});
 			cancel.setOnClickListener(v -> d.dismiss());

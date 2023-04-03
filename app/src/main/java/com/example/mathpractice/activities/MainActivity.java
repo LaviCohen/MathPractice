@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.practice.PracticeActivity;
-import com.example.mathpractice.service.ReminderService;
 
 public class MainActivity extends AppCompatActivity {
 

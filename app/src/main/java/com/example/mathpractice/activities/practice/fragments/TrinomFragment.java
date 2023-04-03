@@ -37,8 +37,8 @@ public class TrinomFragment extends AbstractPracticeFragment{
 	@SuppressLint("StringFormatMatches")
 	@Override
 	protected void showFailText() {
-		String text = String.format(getString(R.string.correct_answers), ((Trinom)currentPractice).solution1,
-				((Trinom)currentPractice).solution2);
+		String text = String.format(getString(R.string.correct_answers), currentPractice.toExp(),
+				AbstractPractice.fn(((Trinom)currentPractice).solution1), AbstractPractice.fn(((Trinom)currentPractice).solution2));
 		textView.setText(text);
 	}
 

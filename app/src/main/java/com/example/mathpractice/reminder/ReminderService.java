@@ -1,4 +1,4 @@
-package com.example.mathpractice.service;
+package com.example.mathpractice.reminder;
 
 import android.app.Service;
 import android.content.Intent;

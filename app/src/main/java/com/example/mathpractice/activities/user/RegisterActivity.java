@@ -31,8 +31,8 @@ public class RegisterActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
-		this.imageView = (ImageView) this.findViewById(R.id.myPhoto);
-		Button takePhotoButton = (Button) this.findViewById(R.id.takePhotoButton);
+		this.imageView = findViewById(R.id.myPhoto);
+		Button takePhotoButton = findViewById(R.id.takePhotoButton);
 		takePhotoButton.setOnClickListener(v -> {
 			System.out.println("Taking photo");
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -46,7 +46,7 @@ public class RegisterActivity extends Activity {
 				CameraUtilities.dispatchTakePictureIntent(this);
 			}
 		});
-		Button pickPhotoFromGalleryButton = (Button) this.findViewById(R.id.PickFromGalleryButton);
+		Button pickPhotoFromGalleryButton = findViewById(R.id.PickFromGalleryButton);
 		pickPhotoFromGalleryButton.setOnClickListener(v -> {
 			System.out.println("Picking photo");
 			CameraUtilities.pickPictureFromGallery(this);
@@ -57,8 +57,10 @@ public class RegisterActivity extends Activity {
 		finish.setOnClickListener(v -> register(username.getText().toString(), password.getText().toString()));
 		Button rotateButton = findViewById(R.id.rotateButton);
 		rotateButton.setOnClickListener(view -> {
-			userPicture = PictureUtilities.rotateBitmap(userPicture, 90f);
-			imageView.setImageBitmap(userPicture);
+			if (userPicture != null) {
+				userPicture = PictureUtilities.rotateBitmap(userPicture, 90f);
+				imageView.setImageBitmap(userPicture);
+			}
 		});
 	}
 
@@ -102,6 +104,8 @@ public class RegisterActivity extends Activity {
 		if (photo != null) {
 			userPicture = photo;
 			imageView.setImageBitmap(userPicture);
+		} else {
+			System.out.println("No Photo");
 		}
 	}
 }
