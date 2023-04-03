@@ -26,10 +26,19 @@ import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.cameraNpictures.PictureUtilities;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 
+/**
+ * This activity is the activity to show the data for the current user and to create and login into other users.
+ * */
 public class UserPageActivity extends AppCompatActivity {
 
-	@SuppressLint("SetTextI18n")
+	/**
+	 * The current user's username.
+	 * */
 	private String username;
+
+	/**
+	 * THe base user's profile image, with no hats.
+	 * */
 	private Bitmap baseUsersImage;
 	@SuppressLint("SetTextI18n")
 	@Override
@@ -79,15 +88,29 @@ public class UserPageActivity extends AppCompatActivity {
 		login.setOnClickListener(v ->
 				startActivity(new Intent(UserPageActivity.this, LoginActivity.class)));
 	}
+
+	/**
+	 * Changes user's hat.
+	 * Invoking setUserHatId and updateUserImageNHat.
+	 * @param id the id for the hat to change to.
+	 * */
 	private void changeUserHat(int id) {
 		setUserHatId(id);
 		updateUserImageNHat();
 	}
+
+	/**
+	 * Changes user's hat only on the database.
+	 * @param id the id for the hat to change to.
+	 * */
 	private void setUserHatId(int id) {
 		new DataBaseHelper(this).execSQLForWriting(
 				"UPDATE users SET hat_ID = " + id + " WHERE username = '" + username + "';");
 	}
 
+	/**
+	 * Update the user's profile image displayed with the required hat, as in the database.
+	 * */
 	private void updateUserImageNHat() {
 		System.out.println("Updating hat");
 		Bitmap imageToDisplay = PictureUtilities.putHat(this, username, baseUsersImage);
@@ -95,11 +118,17 @@ public class UserPageActivity extends AppCompatActivity {
 		profileImage.setImageBitmap(imageToDisplay);
 	}
 
+	/**
+	 * Method to go back to practice activity when back navigation button is pressed.
+	 * */
 	@Override
 	public void onBackPressed() {
 		gotoPracticeActivity();
 	}
 
+	/**
+	 * Method to go back to practice activity when upper menu back button is pressed.
+	 * */
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 		if (item.getItemId() == R.id.back_menu_option) {
@@ -108,6 +137,9 @@ public class UserPageActivity extends AppCompatActivity {
 		return true;
 	}
 
+	/**
+	 * Method to go back to practice activity, called when back button is pressed.
+	 * */
 	public void gotoPracticeActivity(){
 		Intent i = new Intent(UserPageActivity.this, PracticeActivity.class);
 		startActivity(i);

@@ -14,6 +14,9 @@ import com.example.mathpractice.R;
 
 import java.util.ArrayList;
 
+/**
+ * Subclass of {@link RecyclerView}, specified for displaying practices data (full scores data).
+ * */
 public class PracticesRecViewAdapter extends RecyclerView.Adapter<PracticesRecViewAdapter.ViewHolder> {
 
     private ArrayList<Practice> practices = new ArrayList<>();

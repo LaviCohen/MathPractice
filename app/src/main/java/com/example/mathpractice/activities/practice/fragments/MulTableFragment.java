@@ -15,8 +15,15 @@ import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.math.AbstractPractice;
 import com.example.mathpractice.math.MulTable;
 
+/**
+ * Subclass of {@link AbstractPracticeFragment}, specified for {@link MulTable} practice type.
+ * All methods are inherited.
+ * */
 public class MulTableFragment extends AbstractPracticeFragment {
 
+	/**
+	 * The input field to get the answer.
+	 * */
 	private EditText answerField;
 
 	@Override
@@ -32,7 +39,7 @@ public class MulTableFragment extends AbstractPracticeFragment {
 	@Override
 	protected void showFailText() {
 		textView.setText(String.format("Wrong, the correct answer for\n%s\nis %s",
-				((MulTable)currentPractice).toExp(), AbstractPractice.fn(((MulTable)currentPractice).solution)));
+				currentPractice.toExp(), AbstractPractice.fn(((MulTable)currentPractice).solution)));
 	}
 
 	@Override
@@ -43,7 +50,7 @@ public class MulTableFragment extends AbstractPracticeFragment {
 	@Override
 	protected int checkInputs() {
 		try {
-			return ((MulTable)currentPractice).check(Double.parseDouble(answerField.getText().toString())) ? 1 : 0;
+			return currentPractice.check(Double.parseDouble(answerField.getText().toString())) ? 1 : 0;
 		} catch (NumberFormatException nfe) {
 			return -1;
 		}

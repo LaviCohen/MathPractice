@@ -20,11 +20,24 @@ import com.example.mathpractice.cameraNpictures.CameraUtilities;
 import com.example.mathpractice.cameraNpictures.PictureUtilities;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 
+/**
+ * This activity is the activity to create new user.
+ * */
 public class RegisterActivity extends Activity {
 
+	/**
+	 * The permission code for camera usage.
+	 * */
 	private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
+	/**
+	 * The image view for the image profile.
+	 * */
 	private ImageView imageView;
+
+	/**
+	 * The bitmap of the image profile.
+	 * */
 	private Bitmap userPicture;
 
 	@Override
@@ -64,6 +77,11 @@ public class RegisterActivity extends Activity {
 		});
 	}
 
+	/**
+	 * Method to register as new user, include input checks.
+	 * @param username The username to register.
+	 * @param password The user's password.
+	 * */
 	private void register(String username, String password){
 		DataBaseHelper dbh = new DataBaseHelper(RegisterActivity.this);
 		if (userPicture == null) {
@@ -83,6 +101,10 @@ public class RegisterActivity extends Activity {
 		startActivity(new Intent(RegisterActivity.this, UserPageActivity.class));
 	}
 
+	/**
+	 * This method called when the user allow or deny camera permission, and response respectively.
+	 * The params are default, as this method overridden.
+	 * */
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -96,8 +118,11 @@ public class RegisterActivity extends Activity {
 		}
 	}
 
-	// this function is triggered when user
-	// selects the image from the imageChooser
+	/**
+	 * This function is triggered when picture is coming from the system, from gallery or image taken.
+	 * The params are default, as this method overridden.
+	 * */
+	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		Bitmap photo = CameraUtilities.getPicture(this, requestCode, resultCode, data);

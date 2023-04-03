@@ -13,6 +13,10 @@ import android.widget.TextView;
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.practice.PracticeActivity;
 
+/**
+ * This activity is for opening animation only, and have no other use (except for the button to move to the next
+ * activity - {@link PracticeActivity}).
+ * */
 public class MainActivity extends AppCompatActivity {
 
 	@Override
@@ -31,12 +35,7 @@ public class MainActivity extends AppCompatActivity {
 		tvAnimatorAlpha.setDuration(5000);
 		tvAnimatorTransY.setDuration(5000);
 		Button button = findViewById(R.id.bLetsGo);
-		button.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				startActivity(new Intent(MainActivity.this, PracticeActivity.class));
-			}
-		});
+		button.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, PracticeActivity.class)));
 		ivAnimatorAlpha.start();
 		ivAnimatorTransX.start();
 		tvAnimatorAlpha.start();

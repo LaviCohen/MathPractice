@@ -15,6 +15,9 @@ import com.example.mathpractice.R;
 
 import java.util.ArrayList;
 
+/**
+ * Subclass of {@link RecyclerView}, specified for displaying levels scores data.
+ * */
 public class LevelsRecViewAdapter extends RecyclerView.Adapter<LevelsRecViewAdapter.ViewHolder> {
 
     private ArrayList<Level> levels = new ArrayList<>();

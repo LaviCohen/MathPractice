@@ -16,10 +16,18 @@ import androidx.annotation.Nullable;
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.math.AbstractPractice;
+import com.example.mathpractice.math.MulTable;
 import com.example.mathpractice.math.Trinom;
 
+/**
+ * Subclass of {@link AbstractPracticeFragment}, specified for {@link Trinom} practice type.
+ * All methods are inherited.
+ * */
 public class TrinomFragment extends AbstractPracticeFragment{
 
+	/**
+	 * Two {@link EditText}s to get answer from them (because (almost) each trinom have two solutions).
+	 * */
 	private EditText answer1, answer2;
 
 	@Nullable

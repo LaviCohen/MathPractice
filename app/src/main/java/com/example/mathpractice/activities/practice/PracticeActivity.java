@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 
 import com.example.mathpractice.R;
+import com.example.mathpractice.activities.practice.fragments.AbstractPracticeFragment;
 import com.example.mathpractice.activities.practice.fragments.MulTableFragment;
 import com.example.mathpractice.activities.practice.fragments.TrinomFragment;
 import com.example.mathpractice.activities.user.UserPageActivity;
@@ -24,12 +25,21 @@ import com.example.mathpractice.reminder.ReminderService;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+/**
+ * This activity is the frame of the practicing fragments, contains the menus and {@link android.widget.FrameLayout} container.
+ * */
 public class PracticeActivity extends AppCompatActivity {
 
-
+	/**
+	 * The {@link DataBaseHelper} object which will be used in this activity, created once on onCreate.
+	 * */
 	public DataBaseHelper dataBase = null;
 
-	public Fragment currentFragment = null;
+	/**
+	 * The current {@link AbstractPracticeFragment} currently shown on the screen, either {@link MulTableFragment} or
+	 * {@link TrinomFragment}.
+	 * */
+	public AbstractPracticeFragment currentFragment = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +75,7 @@ public class PracticeActivity extends AppCompatActivity {
 		bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 			@Override
 			public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-				Fragment selected = null;
+				AbstractPracticeFragment selected = null;
 				if (item.getItemId() == R.id.trinom_menu_option) {
 					selected = new TrinomFragment();
 				} else if (item.getItemId() == R.id.mul_table_menu_option) {
@@ -82,6 +92,10 @@ public class PracticeActivity extends AppCompatActivity {
 		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
 	}
 
+	/**
+	 * This method handle upper menu events, and go to the correct activity - {@link ScoresActivity}, {@link SettingsActivity}
+	 *  and {@link UserPageActivity}.
+	 * */
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 		if (item.getItemId() == R.id.scores_menu_option) {
@@ -104,6 +118,9 @@ public class PracticeActivity extends AppCompatActivity {
 		return true;
 	}
 
+	/**
+	 * Method that inflates the upper menu for this activity.
+	 * */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();

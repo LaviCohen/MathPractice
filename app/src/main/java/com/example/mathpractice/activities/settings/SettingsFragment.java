@@ -12,6 +12,9 @@ import com.example.mathpractice.R;
 import com.example.mathpractice.activities.scores.ScoresActivity;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 
+/**
+ * The settings fragment, as required in android preferences documentation.
+ * */
 public class SettingsFragment extends PreferenceFragmentCompat {
 
 	@Override
