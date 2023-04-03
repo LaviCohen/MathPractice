@@ -76,9 +76,5 @@ public class LevelsRecViewAdapter extends RecyclerView.Adapter<LevelsRecViewAdap
         public String getLevel() {
             return level;
         }
-
-        public String getScore() {
-            return score;
-        }
     }
 }

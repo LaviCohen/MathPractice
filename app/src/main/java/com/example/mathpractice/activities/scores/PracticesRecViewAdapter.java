@@ -52,6 +52,7 @@ public class PracticesRecViewAdapter extends RecyclerView.Adapter<PracticesRecVi
             exp = itemView.findViewById(R.id.practice);
             success = itemView.findViewById(R.id.success);
         }
+        @SuppressLint("SetTextI18n")
         public void update(Practice p){
             level.setText(p.level + "");
             exp.setText(p.exp);
@@ -67,30 +68,6 @@ public class PracticesRecViewAdapter extends RecyclerView.Adapter<PracticesRecVi
         public Practice(String exp, int level, boolean success) {
             this.exp = exp;
             this.level = level;
-            this.success = success;
-        }
-
-        public String getExp() {
-            return exp;
-        }
-
-        public void setExp(String exp) {
-            this.exp = exp;
-        }
-
-        public int getLevel() {
-            return level;
-        }
-
-        public void setLevel(int level) {
-            this.level = level;
-        }
-
-        public boolean isSuccess() {
-            return success;
-        }
-
-        public void setSuccess(boolean success) {
             this.success = success;
         }
     }

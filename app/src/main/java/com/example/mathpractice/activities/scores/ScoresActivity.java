@@ -52,6 +52,7 @@ public class ScoresActivity extends AppCompatActivity {
 			full = ((CheckBox)view).isChecked();
 			showScoresForType(type);
 		});
+		@SuppressWarnings("Deprecated")
 		BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_scores_menu);
 		bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
 
