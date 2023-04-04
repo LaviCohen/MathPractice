@@ -9,16 +9,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mathpractice.R;
 import com.example.mathpractice.activities.scores.LevelsRecViewAdapter;
 import com.example.mathpractice.activities.scores.PracticesRecViewAdapter;
 import com.example.mathpractice.activities.scores.ScoresActivity;
@@ -38,12 +34,27 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Subclass of {@link SQLiteOpenHelper}, used to deal with data w/r.
+ * Also contain relevant static utility functions.
+ * */
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, "math_practice_db", null, 1);
     }
 
+    /**
+     * Get this specific user hat data, as abused {@link Rect} object.
+     * @param dbh the database to use.
+     * @param username the user' username.
+     * @return Rect object, when the vars are arranged as follows:
+     * <tr><th>The Rect Var Name</th><th>The Value Stored</th></tr>
+     * <tr><td>left</td><td>Hat's x position</td></tr>
+     * <tr><td>top</td><td>Hat's y position</td></tr>
+     * <tr><td>right</td><td>Hat size</td></tr>
+     * <tr><td>bottom</td><td>Hat ID</td></tr>
+     * */
     public static Rect getHatRect(DataBaseHelper dbh, String username){
         Cursor c = dbh.execSQLForReading(
                 "SELECT hat_ID FROM users WHERE username = '" + username + "';");
@@ -88,11 +99,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Executing reading-only SQL command.
+     * @param sqlCommand the command to execute.
+     * @return the returned cursor object.
+     * */
     public Cursor execSQLForReading(String sqlCommand){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(sqlCommand, null);
     }
 
+    /**
+     * Create new user in the database.
+     * @param username the new user's username.
+     * @param password the new user's password.
+     * @param image the new user's profile image.
+     * @param rotationDegs the new user's image rotation degree.
+     * */
     public void createNewUser(String username, String password, Bitmap image, int rotationDegs) {
         ContentValues cv = new  ContentValues();
         cv.put("username", username);
@@ -152,12 +175,24 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         query = "CREATE TABLE practices_done_type_1_user_" + username + " (id INTEGER PRIMARY KEY AUTOINCREMENT, level INTEGER, practice TEXT, success INTEGER);";
         sqLiteDatabase.execSQL(query);
     }
+
+    /**
+     * Converts bitmap to bytes array, to store at the database.
+     * @param bitmap the bitmap to convert.
+     * @return Byte array which represents the given bitmap.
+     * */
     public byte[] getBytesFromBitmap(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
         return stream.toByteArray();
     }
 
+    /**
+     * Adding practice which the user submitted to the database.
+     * @param practice the practice which has been submitted.
+     * @param user the user who submitted the practice.
+     * @param success whether the user was correct or not.
+     * */
     public void addPractice(AbstractPractice practice, String user, boolean success) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -172,11 +207,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         System.out.println("Table: " + table);
         db.insert(table, null, cv);
     }
-
+    /**
+     * Executing writing SQL command.
+     * @param query the command to execute.
+     * */
     public void execSQLForWriting(String query) {
         this.getWritableDatabase().execSQL(query);
     }
 
+    /**
+     * Create the required {@link RecyclerView.Adapter} for the scores activity.
+     * @param context the current active context.
+     * @param type the required adapter type.
+     * @param full whether to return full practices data aor only levels' scores.
+     * @return The required adapter.
+     * */
     @SuppressLint("Range")
     public RecyclerView.Adapter getAdapter(Context context, int type, boolean full) {
         RecyclerView.Adapter recViewAdapter = null;
@@ -190,7 +235,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (ScoresActivity.scores == null) {
             String calculation = PreferenceManager.getDefaultSharedPreferences(context).getString("calculation", "all");
             for (int i = 0; i < maxLevel; i++) {
-                updateScores(i + 1, type, context, calculation);
+                updateScores(context, type,i + 1, calculation);
             }
         }
         if (maxLevel == 0){
@@ -228,7 +273,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return recViewAdapter;
     }
-    public static boolean updateScores(int level, int type, Context context, String calculation) {
+
+    /**
+     * The method which updates the scores data.
+     * @param context the current active context.
+     * @param type the type to update its scores.
+     * @param level the level to update its scores.
+     * @param calculation the current scores calculation method.
+     * @return if the scores update requires level-up.
+     * */
+    public static boolean updateScores(Context context, int type, int level, String calculation) {
         DataBaseHelper dataBase = new DataBaseHelper(context);
         if (ScoresActivity.scores == null) {
             ScoresActivity.scores = new double[3][3];
