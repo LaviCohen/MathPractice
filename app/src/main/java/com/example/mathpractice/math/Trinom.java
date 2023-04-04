@@ -2,6 +2,9 @@ package com.example.mathpractice.math;
 
 import java.util.Random;
 
+/**
+ * Subclass  of {@link AbstractPractice}, represents specifically trinom practice type.
+ * */
 public class Trinom extends AbstractPractice{
 
     public double solution1, solution2;
@@ -61,13 +64,22 @@ public class Trinom extends AbstractPractice{
         this.solution2 = round((-b - sqrt) / (2 * a), 3);
     }
 
+    /**
+     * This method generates {@link Trinom} in the required level.
+     * The levels are:
+     * <tr><td>1</td><td>a = 1, factors and solutions are integers.</td></tr>
+     * <tr><td>2</td><td>a=1, factors and solutions might be <i>x.5</i> and/or negative.</td></tr>
+     * <tr><td>3</td><td>a is integer from 1 to 10, factors and solutions might be <i>x.5</i> and/or negative.</td></tr>
+     * @param level the required level to generate the practice at.
+     * @return generated practice as required.
+     * */
     public static Trinom generateTrinom(int level) {
         Random rnd = new Random();
         double a = 0, b = 0, c = 0;
         if (level == 1) {
             double solution1 = rnd.nextInt(10);
             a = 1;
-            b = rnd.nextInt(10);
+            b = rnd.nextInt(9) + 1;
             c = -(solution1 * solution1 + solution1 * b);
         } else if (level == 2) {
             double solution1 = rnd.nextInt(10);
