@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,10 +20,6 @@ import com.example.mathpractice.activities.scores.ScoresActivity;
 import com.example.mathpractice.math.AbstractPractice;
 
 import com.example.mathpractice.math.MulTable;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.common.InputImage;
@@ -32,7 +27,6 @@ import com.google.mlkit.vision.face.FaceDetectorOptions;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Subclass of {@link SQLiteOpenHelper}, used to deal with data w/r.
@@ -136,34 +130,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         FaceDetector detector = FaceDetection.getClient(highAccuracyOpts);
 
-        Task<List<Face>> result =
-                detector.process(inputImage)
-                        .addOnSuccessListener(
-                                new OnSuccessListener<List<Face>>() {
-                                    @Override
-                                    public void onSuccess(List<Face> faces) {
-                                        if (faces.isEmpty()) {
-                                            System.out.println("No face was detected");
-                                            return;
-                                        }
-                                        Rect faceRect = faces.get(0).getBoundingBox();
-                                        p.x = faceRect.centerX();
-                                        p.y = faceRect.top + 200;
-                                        DataBaseHelper.this.execSQLForWriting(
-                                                "UPDATE users SET hat_x = " + p.x  + ", hat_y = " + p.y
-                                                         + ", hat_size = " + faceRect.width() * 1.3
-                                                 + " WHERE username = '" + username + "';"
-                                        );
-                                        System.out.println("Data Updated, " + p.toString());
-                                    }
-                                })
-                        .addOnFailureListener(
-                                new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        System.out.println("Failed to detect face");
-                                    }
-                                });
+        detector.process(inputImage)
+                .addOnSuccessListener(
+                        faces -> {
+                            if (faces.isEmpty()) {
+                                System.out.println("No face was detected");
+                                return;
+                            }
+                            Rect faceRect = faces.get(0).getBoundingBox();
+                            p.x = faceRect.centerX();
+                            p.y = faceRect.top + 200;
+                            DataBaseHelper.this.execSQLForWriting(
+                                    "UPDATE users SET hat_x = " + p.x  + ", hat_y = " + p.y
+                                             + ", hat_size = " + faceRect.width() * 1.3
+                                     + " WHERE username = '" + username + "';"
+                            );
+                            System.out.println("Data Updated, " + p);
+                        })
+                .addOnFailureListener(
+                        e -> System.out.println("Failed to detect face"));
         cv.put("hat_x", p.x);
         cv.put("hat_y", p.y);
         cv.put("hat_size", 0);
@@ -199,7 +184,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put("level", practice.getLevel());
         cv.put("practice", practice.toExp());
         cv.put("success", success);
-        System.out.println("Inserting " + cv.toString());
+        System.out.println("Inserting " + cv);
         if (practice instanceof MulTable) {
             System.out.println("Mul");
         }
@@ -223,8 +208,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      * @return The required adapter.
      * */
     @SuppressLint("Range")
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public RecyclerView.Adapter getAdapter(Context context, int type, boolean full) {
-        RecyclerView.Adapter recViewAdapter = null;
+        RecyclerView.Adapter recViewAdapter;
         String user = PreferenceManager.getDefaultSharedPreferences(context).getString("user", "Local");
         Cursor c = execSQLForReading("SELECT MAX(level) FROM practices_done_type_" + type + "_user_" + user);
         c.moveToFirst();
