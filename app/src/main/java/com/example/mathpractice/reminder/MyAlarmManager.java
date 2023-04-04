@@ -8,8 +8,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+/**
+ * Static utility class that handles the {@link AlarmManager} usage, to create reminders.
+ * */
 public class MyAlarmManager {
-	public static final int ALARM_REQUEST_CODE = 234324243;
+
+	/**
+	 * The code for alarm requests.
+	 * */
+	public static final int ALARM_REQUEST_CODE = 1777;
+
+	/**
+	 * This method sets reminder alarm to post reminder notification.
+	 * @param activity the current activity.
+	 * @param minutes the number of minutes to remind in.
+	 * */
 	public static void setAlarm(Activity activity, int minutes){
 		Intent intent = new Intent(activity, MyBroadcastReceiver.class);
 		@SuppressLint("UnspecifiedImmutableFlag")

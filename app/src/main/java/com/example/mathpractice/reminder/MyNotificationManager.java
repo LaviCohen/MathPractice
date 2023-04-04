@@ -1,5 +1,6 @@
 package com.example.mathpractice.reminder;
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,14 +13,33 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.mathpractice.activities.practice.PracticeActivity;
+import com.example.mathpractice.activities.practice.fragments.MulTableFragment;
+import com.example.mathpractice.activities.practice.fragments.TrinomFragment;
 
+/**
+ * Static utility class that handles the {@link NotificationManager} usage, to postNotifications.
+ * */
 public class MyNotificationManager {
 
+	/**
+	 * Static notification ID counter.
+	 * */
 	private static int id = 0;
 
-	private static boolean inited = false;
+	/**
+	 * Is that the first notification? if true, init the class and became false. used once per app running.
+	 * */
+	private static boolean firstNotification = true;
+
+	/**
+	 * The notification channel ID.
+	 * */
 	private static final String CHANNEL_ID = "MyChannelID";
 
+	/**
+	 * This method initializes this class utility, create all needed such as channel etc.
+	 * @param context current active context.
+	 * */
 	public static void init(Context context){
 		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 			CharSequence name = "MyChannel";
@@ -32,16 +52,22 @@ public class MyNotificationManager {
 			NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
 			notificationManager.createNotificationChannel(channel);
 		}
-		inited = true;
+		firstNotification = false;
 	}
 
+	/**
+	 * This method post notification as required, and init the class if needed.
+	 * @param context current active context.
+	 * @param icon the notification's icon.
+	 * @param title the notification's title.
+	 * @param content the notification's content.
+	 * @param intent the intent which will be passed when the user click on the notification.
+	 * */
 	@RequiresApi(api = Build.VERSION_CODES.M)
-	public static void postNotification(Context context, int icon, String  title, String content){
-		if (!inited) {
+	public static void postNotification(Context context, int icon, String  title, String content, Intent intent){
+		if (firstNotification) {
 			init(context);
 		}
-		Intent intent = new Intent(context, PracticeActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
 				.setSmallIcon(icon)
