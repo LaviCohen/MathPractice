@@ -25,6 +25,7 @@ import com.example.mathpractice.activities.practice.PracticeActivity;
 import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.cameraNpictures.PictureUtilities;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
+import com.example.mathpractice.sqlDataBase.UsersHelper;
 
 /**
  * This activity is the activity to show the data for the current user and to create and login into other users.
@@ -52,7 +53,7 @@ public class UserPageActivity extends AppCompatActivity {
 		((TextView) findViewById(R.id.user_level_field)).setText("Level: " + SettingsActivity.getUserGeneralLevel(this));
 		baseUsersImage = null;
 		if (!username.equals("Local")) {
-			Cursor c = new DataBaseHelper(this).execSQLForReading(
+			Cursor c = new UsersHelper(this).execSQLForReading(
 					"SELECT profile_image FROM users WHERE username = '" + username + "';");
 			c.moveToFirst();
 			@SuppressLint("Range") byte[] bitmapArr = c.getBlob(c.getColumnIndex("profile_image"));
@@ -79,7 +80,7 @@ public class UserPageActivity extends AppCompatActivity {
 					int finalI = i;
 					hatLinearLayout.setOnClickListener(v ->
 							{
-								Cursor c = new DataBaseHelper(UserPageActivity.this).execSQLForReading(
+								Cursor c = new UsersHelper(UserPageActivity.this).execSQLForReading(
 										"SELECT hat_ID FROM users WHERE username = '" + username + "';");
 								c.moveToFirst();
 								@SuppressLint("Range") int id = c.getInt(c.getColumnIndex("hat_ID"));
@@ -115,7 +116,7 @@ public class UserPageActivity extends AppCompatActivity {
 	 * @param id the id for the hat to change to.
 	 * */
 	private void setUserHatId(int id) {
-		new DataBaseHelper(this).execSQLForWriting(
+		new UsersHelper(this).execSQLForWriting(
 				"UPDATE users SET hat_ID = " + id + " WHERE username = '" + username + "';");
 	}
 

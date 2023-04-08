@@ -16,6 +16,7 @@ import androidx.preference.PreferenceManager;
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.practice.PracticeActivity;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
+import com.example.mathpractice.sqlDataBase.PracticesHelper;
 
 /**
  * This activity is the activity to show & change the settings for the current user.
@@ -54,7 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
 		if (user.equals("Local")) {
 			return 1;
 		}
-		Cursor c = new DataBaseHelper(context).execSQLForReading("SELECT level_type_" + type +
+		Cursor c = new PracticesHelper(context).execSQLForReading("SELECT level_type_" + type +
 				" FROM users WHERE username = '" + user + "';");
 		c.moveToFirst();
 		System.out.println("There are " + c.getColumnCount() + " columns & " + c.getCount() + " rows");

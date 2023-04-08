@@ -104,7 +104,7 @@ public class UsersHelper extends DataBaseHelper{
 
 	/**
 	 * Get this specific user hat data, as abused {@link Rect} object.
-	 * @param dbh the database to use.
+	 * @param usersHelper the database to use.
 	 * @param username the user' username.
 	 * @return Rect object, when the vars are arranged as follows:
 	 * <tr><th>The Rect Var Name</th><th>The Value Stored</th></tr>
@@ -113,24 +113,24 @@ public class UsersHelper extends DataBaseHelper{
 	 * <tr><td>right</td><td>Hat size</td></tr>
 	 * <tr><td>bottom</td><td>Hat ID</td></tr>
 	 * */
-	public static Rect getHatRect(DataBaseHelper dbh, String username){
-		Cursor c = dbh.execSQLForReading(
+	public static Rect getHatRect(UsersHelper usersHelper, String username){
+		Cursor c = usersHelper.execSQLForReading(
 				"SELECT hat_ID FROM users WHERE username = '" + username + "';");
 		c.moveToFirst();
 		@SuppressLint("Range") int id = c.getInt(c.getColumnIndex("hat_ID"));
 		c.close();
-		c = dbh.execSQLForReading(
+		c = usersHelper.execSQLForReading(
 				"SELECT hat_size FROM users WHERE username = '" + username + "';");
 		c.moveToFirst();
 		@SuppressLint("Range") int hatSize = c.getInt(c.getColumnIndex("hat_size"));
 		c.close();
 		if (id != -1 && hatSize != 0) {
-			c = dbh.execSQLForReading(
+			c = usersHelper.execSQLForReading(
 					"SELECT hat_x FROM users WHERE username = '" + username + "';");
 			c.moveToFirst();
 			@SuppressLint("Range") int hatX = c.getInt(c.getColumnIndex("hat_x"));
 			c.close();
-			c = dbh.execSQLForReading(
+			c = usersHelper.execSQLForReading(
 					"SELECT hat_y FROM users WHERE username = '" + username + "';");
 			c.moveToFirst();
 			@SuppressLint("Range") int hatY = c.getInt(c.getColumnIndex("hat_y"));

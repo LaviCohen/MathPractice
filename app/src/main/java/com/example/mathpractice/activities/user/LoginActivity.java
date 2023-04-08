@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.mathpractice.R;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
+import com.example.mathpractice.sqlDataBase.UsersHelper;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,12 +28,12 @@ public class LoginActivity extends AppCompatActivity {
 		EditText password = findViewById(R.id.editTextPassword);
 		Button login = findViewById(R.id.login_button);
 		login.setOnClickListener(v -> {
-			DataBaseHelper dbh = new DataBaseHelper(LoginActivity.this);
-			if (dbh.execSQLForReading("SELECT * FROM users WHERE username = '" + username.getText().toString() + "';").isAfterLast()) {
+			UsersHelper usersHelper = new UsersHelper(LoginActivity.this);
+			if (usersHelper.execSQLForReading("SELECT * FROM users WHERE username = '" + username.getText().toString() + "';").isAfterLast()) {
 				Toast.makeText(LoginActivity.this, "This username isn't exists", Toast.LENGTH_SHORT).show();
 				return;
 			}
-			if (!tryToLogin(username.getText().toString(), password.getText().toString(), dbh)) {
+			if (!tryToLogin(username.getText().toString(), password.getText().toString(), usersHelper)) {
 				Toast.makeText(LoginActivity.this, "Password is incorrect", Toast.LENGTH_SHORT).show();
 				return;
 			}
