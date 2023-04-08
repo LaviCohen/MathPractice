@@ -17,8 +17,14 @@
         android:theme="@style/Theme.MathPractice"
         tools:targetApi="31">
         <activity
-            android:name=".activities.user.LoginActivity"
-            android:exported="false">
+            android:name=".activities.OpenActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -32,16 +38,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
-        <service android:name=".reminder.ReminderService" />
-        <receiver
-            android:name=".reminder.MyBroadcastReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"></action>
-            </intent-filter>
-        </receiver>
         <activity
             android:name=".activities.settings.SettingsActivity"
             android:exported="false">
@@ -70,19 +66,15 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".activities.OpenActivity"
+
+        <receiver
+            android:name=".reminder.MyBroadcastReceiver"
+            android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"></action>
             </intent-filter>
-
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+        </receiver>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.android.fileprovider"

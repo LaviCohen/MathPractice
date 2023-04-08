@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,15 +18,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.practice.PracticeActivity;
 import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.cameraNpictures.PictureUtilities;
+import com.example.mathpractice.reminder.MyAlarmManager;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 import com.example.mathpractice.sqlDataBase.UsersHelper;
 
@@ -97,8 +104,32 @@ public class UserPageActivity extends AppCompatActivity {
 		register.setOnClickListener(v ->
 				startActivity(new Intent(UserPageActivity.this, RegisterActivity.class)));
 		Button login = findViewById(R.id.login_button);
-		login.setOnClickListener(v ->
-				startActivity(new Intent(UserPageActivity.this, LoginActivity.class)));
+		login.setOnClickListener(view -> {
+					Dialog d = new Dialog(UserPageActivity.this);
+					d.setTitle("Login");
+					d.setContentView(R.layout.login_dialog_layout);
+					Button loginDialogButton = d.findViewById(R.id.login_button);
+					Button cancel = d.findViewById(R.id.cancel_button);
+					EditText usernameEditText = d.findViewById(R.id.editTextUsername);
+					EditText passwordEditText = d.findViewById(R.id.editTextPassword);
+
+					loginDialogButton.setOnClickListener(v -> {
+						UsersHelper usersHelper = new UsersHelper(UserPageActivity.this);
+						if (usersHelper.execSQLForReading("SELECT * FROM users WHERE username = '" + usernameEditText.getText().toString() + "';").isAfterLast()) {
+							Toast.makeText(UserPageActivity.this, "This username isn't exists", Toast.LENGTH_SHORT).show();
+							return;
+						}
+						if (!tryToLogin(usernameEditText.getText().toString(), passwordEditText.getText().toString(), usersHelper)) {
+							Toast.makeText(UserPageActivity.this, "Password is incorrect", Toast.LENGTH_SHORT).show();
+							return;
+						}
+						setUser(this, usernameEditText.getText().toString());
+						startActivity(new Intent(UserPageActivity.this, UserPageActivity.class));
+						d.dismiss();
+					});
+					cancel.setOnClickListener(v -> d.dismiss());
+					d.show();
+				});
 	}
 
 	/**
@@ -163,5 +194,21 @@ public class UserPageActivity extends AppCompatActivity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.back_menu, menu);
 		return true;
+	}
+	@SuppressLint("Range")
+	public boolean tryToLogin(String username, String password, DataBaseHelper dbh) {
+		Cursor c = dbh.execSQLForReading("SELECT password FROM users WHERE username = '" + username + "';");
+		c.moveToFirst();
+		if (!c.getString(c.getColumnIndex("password")).equals(password)) {
+			c.close();
+			return false;
+		}
+		c.close();
+		return true;
+	}
+	public static void setUser(Context context, String username){
+		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+		editor.putString("user", username);
+		editor.apply();
 	}
 }

@@ -98,7 +98,7 @@ public class RegisterActivity extends Activity {
 			return;
 		}
 		usersHelper.createNewUser(username, password, userPicture, 0);
-		LoginActivity.setUser(RegisterActivity.this, username);
+		UserPageActivity.setUser(RegisterActivity.this, username);
 		startActivity(new Intent(RegisterActivity.this, UserPageActivity.class));
 	}
 
