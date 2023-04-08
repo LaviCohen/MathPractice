@@ -164,11 +164,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="User Level" />
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="My Schedule"
-                app:icon="@drawable/ic_schedule"/>
         </LinearLayout>
     </LinearLayout>
 

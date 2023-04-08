@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,7 +16,7 @@ import com.example.mathpractice.activities.practice.PracticeActivity;
  * This activity is for opening animation only, and have no other use (except for the button to move to the next
  * activity - {@link PracticeActivity}).
  * */
-public class MainActivity extends AppCompatActivity {
+public class OpenActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 		tvAnimatorAlpha.setDuration(5000);
 		tvAnimatorTransY.setDuration(5000);
 		Button button = findViewById(R.id.bLetsGo);
-		button.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, PracticeActivity.class)));
+		button.setOnClickListener(view -> startActivity(new Intent(OpenActivity.this, PracticeActivity.class)));
 		ivAnimatorAlpha.start();
 		ivAnimatorTransX.start();
 		tvAnimatorAlpha.start();

@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
+import com.example.mathpractice.sqlDataBase.UsersHelper;
 
 /**
  * Static utility class for picture editing.
@@ -50,7 +51,7 @@ public class PictureUtilities {
 	 * @return a bitmap of the base image with the required hat.
 	 * */
 	public static Bitmap putHat(Context context, String username, Bitmap baseUsersImage){
-		Rect hatRect = DataBaseHelper.getHatRect(new DataBaseHelper(context), username);
+		Rect hatRect = UsersHelper.getHatRect(new DataBaseHelper(context), username);
 		if (hatRect == null) {
 			System.out.println("No hat rect");
 			return baseUsersImage;

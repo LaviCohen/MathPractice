@@ -15,8 +15,6 @@
     <string name="auto_level_up">Auto Level-Up</string>
     <string name="back">back</string>
     <string name="user">User</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="trinom">Trinom</string>
     <string name="mul_table">Mul Table</string>
     <string name="trig_id">Trig id</string>

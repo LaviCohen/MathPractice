@@ -19,6 +19,7 @@ import com.example.mathpractice.R;
 import com.example.mathpractice.cameraNpictures.CameraUtilities;
 import com.example.mathpractice.cameraNpictures.PictureUtilities;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
+import com.example.mathpractice.sqlDataBase.UsersHelper;
 
 /**
  * This activity is the activity to create new user.
@@ -83,7 +84,7 @@ public class RegisterActivity extends Activity {
 	 * @param password The user's password.
 	 * */
 	private void register(String username, String password){
-		DataBaseHelper dbh = new DataBaseHelper(RegisterActivity.this);
+		UsersHelper usersHelper = new UsersHelper(RegisterActivity.this);
 		if (userPicture == null) {
 			Toast.makeText(RegisterActivity.this, "You must take a photo", Toast.LENGTH_SHORT).show();
 			return;
@@ -92,11 +93,11 @@ public class RegisterActivity extends Activity {
 			Toast.makeText(RegisterActivity.this, "Username can't contain spaces", Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if (!dbh.execSQLForReading("SELECT * FROM users WHERE username = '" + username + "';").isAfterLast()) {
+		if (!usersHelper.execSQLForReading("SELECT * FROM users WHERE username = '" + username + "';").isAfterLast()) {
 			Toast.makeText(RegisterActivity.this, "Your username is already exists", Toast.LENGTH_SHORT).show();
 			return;
 		}
-		dbh.createNewUser(username, password, userPicture, 0);
+		usersHelper.createNewUser(username, password, userPicture, 0);
 		LoginActivity.setUser(RegisterActivity.this, username);
 		startActivity(new Intent(RegisterActivity.this, UserPageActivity.class));
 	}

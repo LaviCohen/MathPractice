@@ -66,18 +66,29 @@ public class UserPageActivity extends AppCompatActivity {
 			int[] hats = new int[]{R.mipmap.ic_brown_hat_foreground, R.mipmap.ic_black_hat_foreground,
 					R.mipmap.ic_pirates_hat_foreground, R.mipmap.ic_magician_hat_foreground,
 					R.mipmap.ic_crown_foreground};
+			boolean isLocalUser = username.equals("Local");
 			for (int i = 0; i < parentHatsLinearLayout.getChildCount(); i++){
 				hatLinearLayout = (LinearLayout) parentHatsLinearLayout.getChildAt(i);
 				ImageView hatPicture =
 						((ImageView)((FrameLayout)hatLinearLayout.getChildAt(0)).getChildAt(0));
-				if (userLevel < i + 1) {
+				if (userLevel < i + 1 || isLocalUser) {
 					PictureUtilities.makeBlackNwhite(hatPicture);
 				} else {
 					((FrameLayout)hatLinearLayout.getChildAt(0)).getChildAt(1).
 							setVisibility(View.INVISIBLE);
 					int finalI = i;
 					hatLinearLayout.setOnClickListener(v ->
-							changeUserHat(hats[finalI]));
+							{
+								Cursor c = new DataBaseHelper(UserPageActivity.this).execSQLForReading(
+										"SELECT hat_ID FROM users WHERE username = '" + username + "';");
+								c.moveToFirst();
+								@SuppressLint("Range") int id = c.getInt(c.getColumnIndex("hat_ID"));
+								if (id == hats[finalI]) {
+									changeUserHat(-1);
+								} else {
+									changeUserHat(hats[finalI]);
+								}
+							});
 				}
 			}
 		}

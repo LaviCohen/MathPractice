@@ -21,8 +21,8 @@ import com.example.mathpractice.activities.user.UserPageActivity;
 import com.example.mathpractice.activities.scores.ScoresActivity;
 import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.reminder.MyAlarmManager;
-import com.example.mathpractice.reminder.ReminderService;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
+import com.example.mathpractice.sqlDataBase.PracticesHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
@@ -33,7 +33,7 @@ public class PracticeActivity extends AppCompatActivity {
 	/**
 	 * The {@link DataBaseHelper} object which will be used in this activity, created once on onCreate.
 	 * */
-	public DataBaseHelper dataBase = null;
+	public PracticesHelper dataBase = null;
 
 	/**
 	 * The current {@link AbstractPracticeFragment} currently shown on the screen, either {@link MulTableFragment} or
@@ -47,7 +47,7 @@ public class PracticeActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_practice);
 
 		if (dataBase == null) {
-			dataBase = new DataBaseHelper(this);
+			dataBase = new PracticesHelper(this);
 		}
 
 		Button remindMeLaterButton = findViewById(R.id.remind_me_later_button);
@@ -56,7 +56,7 @@ public class PracticeActivity extends AppCompatActivity {
 			Dialog d = new Dialog(PracticeActivity.this);
 			d.setTitle("Pick Number");
 			d.setContentView(R.layout.number_picker_dialog_layout);
-			Button ok = d.findViewById(R.id.ok_button);
+			Button ok = d.findViewById(R.id.set_button);
 			Button cancel = d.findViewById(R.id.cancel_button);
 			NumberPicker np = d.findViewById(R.id.number_picker);
 			np.setMinValue(0);

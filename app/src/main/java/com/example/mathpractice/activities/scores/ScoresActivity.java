@@ -23,6 +23,7 @@ import com.example.mathpractice.R;
 import com.example.mathpractice.activities.practice.PracticeActivity;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 import com.example.mathpractice.activities.scores.LevelsRecViewAdapter.Level;
+import com.example.mathpractice.sqlDataBase.PracticesHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class ScoresActivity extends AppCompatActivity {
 	/**
 	 * The {@link DataBaseHelper} object which will be used in this activity, created once on onCreate.
 	 * */
-	public DataBaseHelper dataBase = null;
+	public PracticesHelper dataBase = null;
 
 	/**
 	 * This {@link TextView} displays the message for no data to show. Hidden when there are practices.
@@ -67,7 +68,7 @@ public class ScoresActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_scores);
 
 		if (dataBase == null) {
-			dataBase = new DataBaseHelper(this);
+			dataBase = new PracticesHelper(this);
 		}
 		setTitle("Scores");
 

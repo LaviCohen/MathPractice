@@ -10,6 +10,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.mathpractice.R;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
+import com.example.mathpractice.sqlDataBase.PracticesHelper;
 
 /**
  * The settings fragment, as required in android preferences documentation.
@@ -39,7 +40,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 		Preference calculatedScoresHistoryOfLevels = findPreference("calculation");
 		assert calculatedScoresHistoryOfLevels != null;
 		calculatedScoresHistoryOfLevels.setOnPreferenceChangeListener((preference, newValue) -> {
-			DataBaseHelper dataBase = new DataBaseHelper(SettingsFragment.this.getContext());
+			PracticesHelper dataBase = new PracticesHelper(SettingsFragment.this.getContext());
 			for (int i = 0; i < 3; i++) {
 				Cursor c = dataBase.execSQLForReading("SELECT MAX(level) FROM practices_done_type_" + i + "_user_" +
 						sharedPreferences.getString("user", "Local"));
@@ -48,7 +49,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 				int maxLevel = c.getInt(c.getColumnIndex("MAX(level)"));
 				c.close();
 				for (int j = 0; j < maxLevel; j++) {
-					DataBaseHelper.updateScores(this.getContext(), i, j + 1, newValue.toString());
+					PracticesHelper.updateScores(this.getContext(), i, j + 1, newValue.toString());
 				}
 			}
 			return true;

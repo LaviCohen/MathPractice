@@ -16,6 +16,7 @@ import com.example.mathpractice.activities.practice.PracticeActivity;
 import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.math.AbstractPractice;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
+import com.example.mathpractice.sqlDataBase.PracticesHelper;
 
 /**
  * This is the abstract class that represents a practice fragment, parent of {@link MulTableFragment} and {@link TrinomFragment}.
@@ -40,7 +41,7 @@ public abstract class AbstractPracticeFragment extends Fragment {
 	/**
 	 * The {@link DataBaseHelper} object which will be used in this activity, created once on startFragment.
 	 * */
-	protected DataBaseHelper dataBase;
+	protected PracticesHelper dataBase;
 	/**
 	 * This method initialize the common things to both of the practice fragment.
 	 * */
@@ -69,7 +70,7 @@ public abstract class AbstractPracticeFragment extends Fragment {
 							AbstractPracticeFragment.this.requireContext()).getString("user", "Local"), checkValue == 1);
 					check.setText(R.string.next);
 					String calculation = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("calculation", "all");
-					boolean levelUp = DataBaseHelper.updateScores(this.getContext(), currentPractice.getType(), currentPractice.getLevel(), calculation);
+					boolean levelUp = PracticesHelper.updateScores(this.getContext(), currentPractice.getType(), currentPractice.getLevel(), calculation);
 					if (levelUp) {
 						Toast.makeText(this.getContext(), "Level-Up! You're on level " +
 								SettingsActivity.getUserGeneralLevel(AbstractPracticeFragment.this.getContext())
