@@ -13,11 +13,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.practice.PracticeActivity;
+import com.example.mathpractice.activities.practice.fragments.MulTableFragment;
+import com.example.mathpractice.activities.practice.fragments.TrinomFragment;
 import com.example.mathpractice.sqlDataBase.PracticesHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -78,8 +81,6 @@ public class ScoresActivity extends AppCompatActivity {
 			if (practice != newType) {
 				practice = newType;
 				showScoresForType(practice);
-			} else {
-				return false;
 			}
 
 			return true;
@@ -87,7 +88,9 @@ public class ScoresActivity extends AppCompatActivity {
 
 		practice = getIntent().getIntExtra("practice", 0);
 
-		bottomNavigationView.setSelectedItemId(practice);
+		bottomNavigationView.setSelectedItemId(
+				practice == 0 ? R.id.trinom_menu_option : R.id.mul_table_menu_option
+		);
 
 		showScoresForType(practice);
 	}

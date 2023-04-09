@@ -77,12 +77,12 @@ public class PracticeActivity extends AppCompatActivity {
 			AbstractPracticeFragment selected = null;
 			if (item.getItemId() == R.id.trinom_menu_option) {
 				if (currentFragment != null && currentFragment instanceof TrinomFragment) {
-					return false;
+					return true;
 				}
 				selected = new TrinomFragment();
 			} else if (item.getItemId() == R.id.mul_table_menu_option) {
 				if (currentFragment != null && currentFragment instanceof MulTableFragment) {
-					return false;
+					return true;
 				}
 				selected = new MulTableFragment();
 			}
@@ -91,17 +91,23 @@ public class PracticeActivity extends AppCompatActivity {
 			currentFragment = selected;
 			return true;
 		});
-		int practice = getIntent().getIntExtra("practice", -1);
-		if (practice == -1) {
-			practice = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).
-					getString("defaultPractice", "0"));
+		int fragmentID = getIntent().getIntExtra("practice", -1);
+		if (fragmentID == -1) {
+			fragmentID = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).
+					getString("defaultPractice", "0")) == 0 ?
+					R.id.trinom_menu_option : R.id.mul_table_menu_option;
+		} else {
+			fragmentID = fragmentID == 0 ? R.id.trinom_menu_option : R.id.mul_table_menu_option;
 		}
-		if (practice == 0) {
+		if (fragmentID == R.id.trinom_menu_option) {
 			currentFragment = new TrinomFragment();
-		} else if (practice == 1) {
+		} else {
 			currentFragment = new MulTableFragment();
 		}
-		bottomNavigationView.setSelectedItemId(practice);
+		bottomNavigationView.setSelectedItemId(fragmentID);
+
+		System.out.println(currentFragment);
+
 		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
 	}
 
