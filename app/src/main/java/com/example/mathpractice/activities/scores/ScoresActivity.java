@@ -13,14 +13,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.practice.PracticeActivity;
-import com.example.mathpractice.activities.practice.fragments.MulTableFragment;
-import com.example.mathpractice.activities.practice.fragments.TrinomFragment;
 import com.example.mathpractice.sqlDataBase.PracticesHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

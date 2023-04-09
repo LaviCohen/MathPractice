@@ -107,11 +107,14 @@ public class UsersHelper extends DataBaseHelper{
 	 * @param usersHelper the database to use.
 	 * @param username the user' username.
 	 * @return Rect object, when the vars are arranged as follows:
+	 * <table>
+	 * <CAPTION><EM>Description of the returned object</EM></CAPTION>
 	 * <tr><th>The Rect Var Name</th><th>The Value Stored</th></tr>
 	 * <tr><td>left</td><td>Hat's x position</td></tr>
 	 * <tr><td>top</td><td>Hat's y position</td></tr>
 	 * <tr><td>right</td><td>Hat size</td></tr>
 	 * <tr><td>bottom</td><td>Hat ID</td></tr>
+	 * </table>
 	 * */
 	public static Rect getHatRect(UsersHelper usersHelper, String username){
 		Cursor c = usersHelper.execSQLForReading(

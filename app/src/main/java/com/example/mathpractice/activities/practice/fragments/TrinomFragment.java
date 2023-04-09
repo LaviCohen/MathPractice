@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.math.AbstractPractice;
-import com.example.mathpractice.math.MulTable;
 import com.example.mathpractice.math.Trinom;
 
 /**

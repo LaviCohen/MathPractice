@@ -18,7 +18,6 @@ import androidx.core.app.ActivityCompat;
 import com.example.mathpractice.R;
 import com.example.mathpractice.cameraNpictures.CameraUtilities;
 import com.example.mathpractice.cameraNpictures.PictureUtilities;
-import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 import com.example.mathpractice.sqlDataBase.UsersHelper;
 
 /**

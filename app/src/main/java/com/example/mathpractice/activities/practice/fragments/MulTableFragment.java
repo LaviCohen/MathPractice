@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.math.AbstractPractice;
@@ -27,7 +29,7 @@ public class MulTableFragment extends AbstractPracticeFragment {
 	private EditText answerField;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return super.startFragment(inflater, container, R.layout.fragment_mul_table);
 	}
 
@@ -65,6 +67,6 @@ public class MulTableFragment extends AbstractPracticeFragment {
 	@SuppressLint("SetTextI18n")
 	public void generatePractice(Context context) {
 		currentPractice = MulTable.generateMulTable(SettingsActivity.getUserLevel(context, AbstractPractice.TYPE_MUL_TABLE));
-		this.textView.setText(((MulTable)currentPractice).toExp());
+		this.textView.setText(currentPractice.toExp());
 	}
 }

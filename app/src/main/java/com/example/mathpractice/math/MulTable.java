@@ -42,10 +42,13 @@ public class MulTable extends AbstractPractice{
     /**
      * This method generates {@link MulTable} in the required level.
      * The levels are:
+     * <table>
+     * <CAPTION><EM>The levels and their definitions</EM></CAPTION>
      * <tr><td>1</td><td>both of the roots are integers from 1 to 10</td></tr>
      * <tr><td>2</td><td>The first root is number from 1.5 to 9.5 (Always have 5 after decimal point)
      *  and the second is from 1 to 10, might be integer or as <i>x.5</i>. </td></tr>
      * <tr><td>3</td><td>both of the roots are doubles from 1 to 10, with one digit after decimal point.</td></tr>
+     * </table>
      * @param level the required level to generate the practice at.
      * @return generated practice as required.
      * */

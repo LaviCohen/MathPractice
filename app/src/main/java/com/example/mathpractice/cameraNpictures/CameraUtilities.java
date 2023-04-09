@@ -114,7 +114,10 @@ public class CameraUtilities {
 	}
 
 	/**
-	 * This method create in=mage file to store the image which will be taken at.
+	 * This method create image file to store the image which will be taken at.
+	 * @param activity the current activity.
+	 * @throws IOException if fail to create file.
+	 * @return the file that has been created.
 	 * */
 	private static File createImageFile(Activity activity) throws IOException {
 		// Create an image file name
@@ -129,7 +132,7 @@ public class CameraUtilities {
 		);
 
 		// Save a file: path for use with ACTION_VIEW intents
-		PreferenceManager.getDefaultSharedPreferences(activity).edit().putString("currentPath", image.getAbsolutePath()).commit();
+		PreferenceManager.getDefaultSharedPreferences(activity).edit().putString("currentPath", image.getAbsolutePath()).apply();
 		return image;
 	}
 }

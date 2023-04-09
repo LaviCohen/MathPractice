@@ -15,11 +15,10 @@ import androidx.preference.PreferenceManager;
 
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.practice.PracticeActivity;
-import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 import com.example.mathpractice.sqlDataBase.PracticesHelper;
 
 /**
- * This activity is the activity to show & change the settings for the current user.
+ * This activity is the activity to show and change the settings for the current user.
  * Also used as static class for access current user's data.
  * */
 public class SettingsActivity extends AppCompatActivity {
@@ -39,6 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
 	/**
 	 * Getter for general user level, calculated from getUserLevel for each type minus 1.
 	 * @param context context to pass to getUserLevel method.
+	 * @return the user's general level.
 	 */
 	public static int getUserGeneralLevel(Context context) {
 		return getUserLevel(context, 0) + getUserLevel(context, 1) - 1;
@@ -48,6 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
 	 * Getter for general user level, calculated from getUserLevel for each type minus 1.
 	 * @param context context to pass to getUserLevel method.
 	 * @param type type of practice which its level required, as specified in {@link com.example.mathpractice.math.AbstractPractice}.
+	 * @return the user's level in the specified type.
 	 */
 	public static int getUserLevel(Context context, int type) {
 		String user = PreferenceManager.getDefaultSharedPreferences(context)

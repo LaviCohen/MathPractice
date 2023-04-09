@@ -33,7 +33,7 @@ public class PictureUtilities {
 	}
 
 	/**
-	 * This method affect an {@link ImageView} to black & white effect.
+	 * This method affect an {@link ImageView} to black and white effect.
 	 * @param picture the {@link ImageView} to affect.
 	 * */
 	public static void makeBlackNwhite(ImageView picture) {

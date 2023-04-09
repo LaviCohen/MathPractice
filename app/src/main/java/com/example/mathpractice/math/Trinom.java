@@ -67,9 +67,12 @@ public class Trinom extends AbstractPractice{
     /**
      * This method generates {@link Trinom} in the required level.
      * The levels are:
+     * <table>
+     * <CAPTION><EM>The levels and their definitions</EM></CAPTION>
      * <tr><td>1</td><td>a = 1, factors and solutions are integers.</td></tr>
      * <tr><td>2</td><td>a=1, factors and solutions might be <i>x.5</i> and/or negative.</td></tr>
      * <tr><td>3</td><td>a is integer from 1 to 10, factors and solutions might be <i>x.5</i> and/or negative.</td></tr>
+     * </table>
      * @param level the required level to generate the practice at.
      * @return generated practice as required.
      * */

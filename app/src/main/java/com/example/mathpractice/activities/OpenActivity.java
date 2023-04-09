@@ -27,7 +27,7 @@ public class OpenActivity extends AppCompatActivity {
 			startActivity(new Intent(OpenActivity.this, PracticeActivity.class));
 			return;
 		}
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_open);
 		ImageView imageView = findViewById(R.id.ivAppLogo);
 		ObjectAnimator ivAnimatorTransX = ObjectAnimator.ofFloat(imageView, "translationX", 0f);
 		ObjectAnimator ivAnimatorAlpha = ObjectAnimator.ofFloat(imageView, "Alpha", 1f);

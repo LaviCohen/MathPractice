@@ -45,6 +45,10 @@ public abstract class AbstractPracticeFragment extends Fragment {
 	protected PracticesHelper dataBase;
 	/**
 	 * This method initialize the common things to both of the practice fragment.
+	 * @param inflater used to inflate the layout file to this fragment.
+	 * @param container the {@link ViewGroup} who will be the parent of the inflated parent view.
+	 * @param layout the layout of the new fragment.
+	 * @return the parent view of the new fragment.
 	 * */
 	public View startFragment(LayoutInflater inflater, ViewGroup container,
 							  int layout) {
@@ -102,9 +106,10 @@ public abstract class AbstractPracticeFragment extends Fragment {
 	
 	/**
 	 * This method let each individual practice fragment to preform its own inputs check.
-	 * @return  <tr><td>1</td><td>If the answer is correct</td></tr>
+	 * @return <table><CAPTION><EM>Key for return values</EM></CAPTION>
+	 * 			<tr><td>1</td><td>If the answer is correct</td></tr>
 	 * 			<tr><td>0</td><td>If the answer is wrong</td></tr>
-	 * 		 	<tr><td>-1</td><td>If the input is illegal</td></tr>
+	 * 		 	<tr><td>-1</td><td>If the input is illegal</td></tr></table>
 	 * */
 	protected abstract int checkInputs();
 
