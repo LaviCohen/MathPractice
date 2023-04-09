@@ -27,7 +27,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class ScoresActivity extends AppCompatActivity {
 
 	/**
-	 * This two-dimensional array is holding the scores for each practicing type ({@link com.example.mathpractice.math.Trinom} or {@link com.example.mathpractice.math.MulTable}, for each level).
+	 * This two-dimensional array holds the scores for each practicing type ({@link com.example.mathpractice.math.Trinom} or {@link com.example.mathpractice.math.MulTable}, for each level).
 	 * The array reduces the number of database reading calls, which affect application's performance.
 	 * */
 	public static double[][] scores = null;
