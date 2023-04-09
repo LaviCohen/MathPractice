@@ -67,11 +67,19 @@ public class ScoresActivity extends AppCompatActivity {
 		BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_scores_menu);
 		bottomNavigationView.setOnItemSelectedListener(item -> {
 
-			int newType = item.getItemId();
+			int newType = -1;
+
+			if (item.getItemId() == R.id.trinom_menu_option) {
+				newType = 0;
+			} else if (item.getItemId() == R.id.mul_table_menu_option) {
+				newType = 1;
+			}
 
 			if (practice != newType) {
 				practice = newType;
 				showScoresForType(practice);
+			} else {
+				return false;
 			}
 
 			return true;

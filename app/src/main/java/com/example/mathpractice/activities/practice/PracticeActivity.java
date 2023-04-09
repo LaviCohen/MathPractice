@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
 import android.view.Menu;
@@ -74,25 +73,28 @@ public class PracticeActivity extends AppCompatActivity {
 
 		BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_practice_menu);
 
-		bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-			@Override
-			public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-				AbstractPracticeFragment selected = null;
-				if (item.getItemId() == R.id.trinom_menu_option) {
-					selected = new TrinomFragment();
-				} else if (item.getItemId() == R.id.mul_table_menu_option) {
-					selected = new MulTableFragment();
+		bottomNavigationView.setOnItemSelectedListener(item -> {
+			AbstractPracticeFragment selected = null;
+			if (item.getItemId() == R.id.trinom_menu_option) {
+				if (currentFragment != null && currentFragment instanceof TrinomFragment) {
+					return false;
 				}
-				if (selected != currentFragment){
-					getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selected).commit();
-					currentFragment = selected;
+				selected = new TrinomFragment();
+			} else if (item.getItemId() == R.id.mul_table_menu_option) {
+				if (currentFragment != null && currentFragment instanceof MulTableFragment) {
+					return false;
 				}
-				return true;
+				selected = new MulTableFragment();
 			}
+			assert selected != null;
+			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selected).commit();
+			currentFragment = selected;
+			return true;
 		});
 		int practice = getIntent().getIntExtra("practice", -1);
 		if (practice == -1) {
-			practice = PreferenceManager.getDefaultSharedPreferences(this).getInt("defaultPractice", 0);
+			practice = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).
+					getString("defaultPractice", "0"));
 		}
 		if (practice == 0) {
 			currentFragment = new TrinomFragment();

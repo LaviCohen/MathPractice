@@ -26,7 +26,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 		userPreference.setSummary(Objects.requireNonNull(userPreference.getSharedPreferences()).getString("user", "Local"));
 		Preference levelPreference = findPreference("level");
 		assert levelPreference != null;
-		levelPreference.setSummary(SettingsActivity.getUserGeneralLevel(this.getContext()));
+		levelPreference.setSummary("Level " + SettingsActivity.getUserGeneralLevel(this.getContext()));
 		Preference calculatedScoresHistoryOfLevels = findPreference("calculation");
 		assert calculatedScoresHistoryOfLevels != null;
 		calculatedScoresHistoryOfLevels.setOnPreferenceChangeListener((preference, newValue) -> {

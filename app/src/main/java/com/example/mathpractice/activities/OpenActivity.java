@@ -23,7 +23,7 @@ public class OpenActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (PreferenceManager.getDefaultSharedPreferences(this).
-				getString("skipOpeningScreen", "false").equals("true")) {
+				getBoolean("skipOpeningScreen", false)) {
 			startActivity(new Intent(OpenActivity.this, PracticeActivity.class));
 			return;
 		}
