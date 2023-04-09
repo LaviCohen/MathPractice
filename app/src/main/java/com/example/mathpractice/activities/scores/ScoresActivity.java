@@ -1,9 +1,7 @@
 package com.example.mathpractice.activities.scores;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,18 +13,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.practice.PracticeActivity;
-import com.example.mathpractice.sqlDataBase.DataBaseHelper;
-import com.example.mathpractice.activities.scores.LevelsRecViewAdapter.Level;
 import com.example.mathpractice.sqlDataBase.PracticesHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.ArrayList;
 
 /**
  * This activity is the activity to show scores and results of the practicing for the current user.
@@ -39,7 +32,7 @@ public class ScoresActivity extends AppCompatActivity {
 	 * */
 	public static double[][] scores = null;
 	/**
-	 * The {@link DataBaseHelper} object which will be used in this activity, created once on onCreate.
+	 * The {@link PracticesHelper} object which will be used in this activity, created once on onCreate.
 	 * */
 	public PracticesHelper dataBase = null;
 
@@ -51,17 +44,12 @@ public class ScoresActivity extends AppCompatActivity {
 	/**
 	 * Current practice type to show, following the types specified in {@link com.example.mathpractice.math.AbstractPractice}.
 	 * */
-	private int type;
+	private int practice;
 
 	/**
 	 * This boolean holds whenever to show full data (every practice which has been done) or only parted (score of each level).
 	 * */
 	private boolean full = false;
-
-	/**
-	 * The username of the current logged-in user.
-	 * */
-	private String username;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -74,33 +62,26 @@ public class ScoresActivity extends AppCompatActivity {
 
 		findViewById(R.id.checkBox).setOnClickListener(view -> {
 			full = ((CheckBox)view).isChecked();
-			showScoresForType(type);
+			showScoresForType(practice);
 		});
-		@SuppressWarnings("Deprecated")
 		BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_scores_menu);
-		bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+		bottomNavigationView.setOnItemSelectedListener(item -> {
 
-			int newType = -1;
+			int newType = item.getItemId();
 
-			if (item.getItemId() == R.id.trinom_menu_option) {
-				newType = 0;
-			} else if (item.getItemId() == R.id.mul_table_menu_option) {
-				newType = 1;
-			}
-
-			if (type != newType) {
-				type = newType;
-				showScoresForType(type);
+			if (practice != newType) {
+				practice = newType;
+				showScoresForType(practice);
 			}
 
 			return true;
 		});
 
-		type = getIntent().getIntExtra("type", 0);
+		practice = getIntent().getIntExtra("practice", 0);
 
-		bottomNavigationView.setSelectedItemId(type);
+		bottomNavigationView.setSelectedItemId(practice);
 
-		showScoresForType(type);
+		showScoresForType(practice);
 	}
 
 	/**
@@ -108,6 +89,7 @@ public class ScoresActivity extends AppCompatActivity {
 	 * @param type practice type as specified in {@link com.example.mathpractice.math.AbstractPractice}.
 	 * */
 	@SuppressLint("Range")
+	@SuppressWarnings("rawtypes")
 	private void showScoresForType(int type) {
 		if (noDataTextView != null) {
 			((ViewGroup)findViewById(R.id.scores_list).getParent()).removeView(noDataTextView);
@@ -151,6 +133,7 @@ public class ScoresActivity extends AppCompatActivity {
 	 * */
 	public void gotoPracticeActivity(){
 		Intent i = new Intent(ScoresActivity.this, PracticeActivity.class);
+		i.putExtra("practice", practice);
 		startActivity(i);
 		finish();
 	}

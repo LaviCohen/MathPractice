@@ -42,5 +42,6 @@
     <string name="score_dots">Score:</string>
     <string name="remind_me_in">Remind me in</string>
     <string name="minutes">minutes</string>
+    <string name="settings_dots">Settings:</string>
 
 </resources>

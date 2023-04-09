@@ -7,17 +7,31 @@
     tools:context=".activities.settings.SettingsActivity"
     android:background="@mipmap/ic_settings_background_background"
     >
-    <LinearLayout
-        android:orientation="vertical"
+
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="@string/settings_dots"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="407dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <FrameLayout
             android:id="@+id/settings_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="99dp"
-            tools:layout_editor_absoluteY="66dp">
+            android:layout_height="wrap_content">
 
         </FrameLayout>
     </LinearLayout>

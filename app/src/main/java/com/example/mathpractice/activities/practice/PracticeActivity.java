@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -88,7 +90,16 @@ public class PracticeActivity extends AppCompatActivity {
 				return true;
 			}
 		});
-		currentFragment = new TrinomFragment();
+		int practice = getIntent().getIntExtra("practice", -1);
+		if (practice == -1) {
+			practice = PreferenceManager.getDefaultSharedPreferences(this).getInt("defaultPractice", 0);
+		}
+		if (practice == 0) {
+			currentFragment = new TrinomFragment();
+		} else if (practice == 1) {
+			currentFragment = new MulTableFragment();
+		}
+		bottomNavigationView.setSelectedItemId(practice);
 		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
 	}
 
@@ -103,7 +114,7 @@ public class PracticeActivity extends AppCompatActivity {
 			int curType = -1;
 			if (currentFragment instanceof TrinomFragment) curType = 0;
 			else if (currentFragment instanceof MulTableFragment) curType = 1;
-			i.putExtra("type", curType);
+			i.putExtra("practice", curType);
 			startActivity(i);
 			finish();
 		} else if (item.getItemId() == R.id.settings_menu_option) {

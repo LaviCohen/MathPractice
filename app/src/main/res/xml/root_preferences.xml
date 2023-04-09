@@ -1,15 +1,30 @@
 <PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <Preference
+        app:key="user"
+        app:title="Current Logged in User"
+        />
+
     <Preference
         app:key="level"
-        app:title="Your Current Level"
-        app:defaultValue="1"
+        app:title="Current User's Level"
         />
+
     <SwitchPreferenceCompat
-        app:key="autoLevelUp"
-        app:defaultValue="true"
-        app:title="Auto Level-Up"/>
+        app:key="skipOpeningScreen"
+        app:defaultValue="false"
+        app:title="Skip Opening Screen"/>
+
+    <ListPreference
+        app:key="defaultPractice"
+        app:title="Default Practice Shown in Practice Screen"
+        app:defaultValue="0"
+        app:summary="%s"
+        app:entries="@array/DefaultPracticeNames"
+        app:entryValues="@array/DefaultPracticeValues"
+        />
 
     <ListPreference
         app:key="calculation"

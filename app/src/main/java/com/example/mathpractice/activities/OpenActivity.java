@@ -1,6 +1,7 @@
 package com.example.mathpractice.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
@@ -21,6 +22,11 @@ public class OpenActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (PreferenceManager.getDefaultSharedPreferences(this).
+				getString("skipOpeningScreen", "false").equals("true")) {
+			startActivity(new Intent(OpenActivity.this, PracticeActivity.class));
+			return;
+		}
 		setContentView(R.layout.activity_main);
 		ImageView imageView = findViewById(R.id.ivAppLogo);
 		ObjectAnimator ivAnimatorTransX = ObjectAnimator.ofFloat(imageView, "translationX", 0f);
