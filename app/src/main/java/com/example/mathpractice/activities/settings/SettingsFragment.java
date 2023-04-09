@@ -1,7 +1,6 @@
 package com.example.mathpractice.activities.settings;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -10,8 +9,9 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.scores.ScoresUtilities;
-import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 import com.example.mathpractice.sqlDataBase.PracticesHelper;
+
+import java.util.Objects;
 
 /**
  * The settings fragment, as required in android preferences documentation.
@@ -23,7 +23,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 		setPreferencesFromResource(R.xml.root_preferences, rootKey);
 		Preference userPreference = findPreference("user");
 		assert userPreference != null;
-		userPreference.setSummary(userPreference.getSharedPreferences().getString("user", "Local"));
+		userPreference.setSummary(Objects.requireNonNull(userPreference.getSharedPreferences()).getString("user", "Local"));
 		Preference levelPreference = findPreference("level");
 		assert levelPreference != null;
 		levelPreference.setSummary(SettingsActivity.getUserGeneralLevel(this.getContext()));
@@ -33,7 +33,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 			PracticesHelper dataBase = new PracticesHelper(SettingsFragment.this.getContext());
 			for (int i = 0; i < 3; i++) {
 				Cursor c = dataBase.execSQLForReading("SELECT MAX(level) FROM practices_done_type_" + i + "_user_" +
-						preference.getSharedPreferences().getString("user", "Local"));
+						Objects.requireNonNull(preference.getSharedPreferences()).getString("user", "Local"));
 				c.moveToFirst();
 				@SuppressLint("Range")
 				int maxLevel = c.getInt(c.getColumnIndex("MAX(level)"));
