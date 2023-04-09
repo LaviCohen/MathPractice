@@ -96,7 +96,7 @@ public class ScoresActivity extends AppCompatActivity {
 			noDataTextView = null;
 		}
 		RecyclerView recView = findViewById(R.id.scores_list);
-		RecyclerView.Adapter recViewAdapter = dataBase.getAdapter(this, type, full);
+		RecyclerView.Adapter recViewAdapter = ScoresUtilities.getAdapter(this, type, full);
 		if (recViewAdapter == null) {
 			noDataTextView = new TextView(this);
 			noDataTextView.setText(R.string.no_data_in_scores_sentence);

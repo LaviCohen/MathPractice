@@ -13,6 +13,7 @@ import androidx.preference.PreferenceManager;
 
 import com.example.mathpractice.R;
 import com.example.mathpractice.activities.practice.PracticeActivity;
+import com.example.mathpractice.activities.scores.ScoresUtilities;
 import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.math.AbstractPractice;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
@@ -70,7 +71,7 @@ public abstract class AbstractPracticeFragment extends Fragment {
 							AbstractPracticeFragment.this.requireContext()).getString("user", "Local"), checkValue == 1);
 					check.setText(R.string.next);
 					String calculation = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("calculation", "all");
-					boolean levelUp = PracticesHelper.updateScores(this.getContext(), currentPractice.getType(), currentPractice.getLevel(), calculation);
+					boolean levelUp = ScoresUtilities.updateScores(this.getContext(), currentPractice.getType(), currentPractice.getLevel(), calculation);
 					if (levelUp) {
 						Toast.makeText(this.getContext(), "Level-Up! You're on level " +
 								SettingsActivity.getUserGeneralLevel(AbstractPracticeFragment.this.getContext())

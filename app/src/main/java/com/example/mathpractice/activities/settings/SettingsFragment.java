@@ -9,6 +9,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.mathpractice.R;
+import com.example.mathpractice.activities.scores.ScoresUtilities;
 import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 import com.example.mathpractice.sqlDataBase.PracticesHelper;
 
@@ -38,7 +39,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 				int maxLevel = c.getInt(c.getColumnIndex("MAX(level)"));
 				c.close();
 				for (int j = 0; j < maxLevel; j++) {
-					PracticesHelper.updateScores(this.getContext(), i, j + 1, newValue.toString());
+					ScoresUtilities.updateScores(this.getContext(), i, j + 1, newValue.toString());
 				}
 			}
 			return true;
