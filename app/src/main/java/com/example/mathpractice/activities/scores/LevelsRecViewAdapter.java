@@ -67,8 +67,19 @@ public class LevelsRecViewAdapter extends RecyclerView.Adapter<LevelsRecViewAdap
             }
         }
     }
+
+    /**
+     * This class represents level score data.
+     * Objects of this type will be sent to the {@link RecyclerView}.
+     */
     public static class Level {
+        /**
+         * The level represented.
+         */
         public String level;
+        /**
+         * The score on the level represented.
+         */
         public String score;
 
         public Level(String level, String score) {

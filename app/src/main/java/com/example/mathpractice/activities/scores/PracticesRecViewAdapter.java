@@ -63,9 +63,22 @@ public class PracticesRecViewAdapter extends RecyclerView.Adapter<PracticesRecVi
             success.setTextColor(p.success?Color.GREEN:Color.RED);
         }
     }
+    /**
+     * This class represents practice score data.
+     * Objects of this type will be sent to the {@link RecyclerView}.
+     */
     public static class Practice {
+        /**
+         * The practice represented, as mathematical expression.
+         */
         public String exp;
+        /**
+         * The practice's level.
+         */
         public int level;
+        /**
+         * Whether the user succeed or not.
+         */
         boolean success;
 
         public Practice(String exp, int level, boolean success) {
