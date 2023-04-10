@@ -42,6 +42,10 @@ public class PracticeActivity extends AppCompatActivity {
 	 * */
 	public AbstractPracticeFragment currentFragment = null;
 
+	/**
+	 * OnCreate method of the screen, part of its life-cycle.
+	 * @param savedInstanceState default android param.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

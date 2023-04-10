@@ -19,6 +19,10 @@ import com.example.mathpractice.activities.practice.PracticeActivity;
  * */
 public class OpenActivity extends AppCompatActivity {
 
+	/**
+	 * OnCreate method of the screen, part of its life-cycle.
+	 * @param savedInstanceState default android param.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

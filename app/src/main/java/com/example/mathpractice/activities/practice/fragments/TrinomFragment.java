@@ -29,18 +29,32 @@ public class TrinomFragment extends AbstractPracticeFragment{
 	 * */
 	private EditText answer1, answer2;
 
+	/**
+	 * This method initialize the fragment.
+	 * @param inflater used to inflate the layout file to this fragment.
+	 * @param container the {@link ViewGroup} who will be the parent of the inflated parent view.
+	 * @param savedInstanceState default android param.
+	 * @return the parent view of the new fragment.
+	 * */
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return super.startFragment(inflater, container, R.layout.fragment_trinom);
 	}
 
+	/**
+	 * Implementation of the abstract <code>{@link AbstractPracticeFragment}.getInputViews</code> method.
+	 * @param parentView the parent view of the fragment, to call findViewById on it.
+	 */
 	@Override
 	protected void getInputViews(View parentView){
 		answer1 = parentView.findViewById(R.id.answerField1);
 		answer2 = parentView.findViewById(R.id.answerField2);
 	}
 
+	/**
+	 * Implementation of the abstract <code>{@link AbstractPracticeFragment}.showFailText</code> method.
+	 */
 	@SuppressLint("StringFormatMatches")
 	@Override
 	protected void showFailText() {
@@ -49,11 +63,21 @@ public class TrinomFragment extends AbstractPracticeFragment{
 		textView.setText(text);
 	}
 
+	/**
+	 * Implementation of the abstract <code>{@link AbstractPracticeFragment}.showIllegalInputToast</code> method.
+	 */
 	@Override
 	protected void showIllegalInputToast() {
 		Toast.makeText(getContext(), R.string.unfilled_fields, Toast.LENGTH_SHORT).show();
 	}
 
+	/**
+	 * Implementation of the abstract <code>{@link AbstractPracticeFragment}.checkInputs</code> method.
+	 * @return <table><CAPTION><EM>Key for return values</EM></CAPTION>
+	 *				<tr><td>1</td><td>If the answer is correct</td></tr>
+	 *	 			<tr><td>0</td><td>If the answer is wrong</td></tr>
+	 *			 	<tr><td>-1</td><td>If the input is illegal</td></tr></table>
+	 */
 	@Override
 	protected int checkInputs() {
 		try {
@@ -64,12 +88,20 @@ public class TrinomFragment extends AbstractPracticeFragment{
 		}
 	}
 
+	/**
+	 * Implementation of the abstract <code>{@link AbstractPracticeFragment}.emptyInputViews</code> method.
+	 */
 	@Override
 	protected void emptyInputViews() {
 		answer1.setText("");
 		answer2.setText("");
 	}
 
+	/**
+	 * Implementation of the abstract <code>{@link AbstractPracticeFragment}.generatePractice</code> method.
+	 * Calls {@link Trinom}.generateTrinom method to generate the required practice.
+	 * @param context current activity's context to get user level.
+	 */
 	@SuppressLint("SetTextI18n")
 	@Override
 	protected void generatePractice(Context context) {

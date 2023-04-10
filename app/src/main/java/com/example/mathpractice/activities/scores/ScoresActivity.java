@@ -50,6 +50,11 @@ public class ScoresActivity extends AppCompatActivity {
 	 * This boolean holds whenever to show full data (every practice which has been done) or only parted (score of each level).
 	 * */
 	private boolean full = false;
+
+	/**
+	 * OnCreate method of the screen, part of its life-cycle.
+	 * @param savedInstanceState default android param.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

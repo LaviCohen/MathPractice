@@ -43,9 +43,14 @@ public class UserPageActivity extends AppCompatActivity {
 	private String username;
 
 	/**
-	 * THe base user's profile image, with no hats.
+	 * The base user's profile image, with no hats.
 	 * */
 	private Bitmap baseUsersImage;
+
+	/**
+	 * OnCreate method of the screen, part of its life-cycle.
+	 * @param savedInstanceState default android param.
+	 */
 	@SuppressLint("SetTextI18n")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

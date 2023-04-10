@@ -40,6 +40,10 @@ public class RegisterActivity extends Activity {
 	 * */
 	private Bitmap userPicture;
 
+	/**
+	 * OnCreate method of the screen, part of its life-cycle.
+	 * @param savedInstanceState default android param.
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
