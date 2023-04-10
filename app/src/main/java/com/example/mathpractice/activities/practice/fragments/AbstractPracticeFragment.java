@@ -1,5 +1,6 @@
 package com.example.mathpractice.activities.practice.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,10 @@ public abstract class AbstractPracticeFragment extends Fragment {
 	 * */
 	protected TextView textView;
 	/**
+	 * The {@link TextView} that displays the level of the currentPractice.
+	 * */
+	protected TextView levelTextView;
+	/**
 	 * The button to check the answer.
 	 * After clicked, the response for the answer displayed and the button's text changed to "Next".
 	 * After clicking again, new practice is displayed and the button's text return to be "Check".
@@ -50,15 +55,18 @@ public abstract class AbstractPracticeFragment extends Fragment {
 	 * @param layout the layout of the new fragment.
 	 * @return the parent view of the new fragment.
 	 * */
+	@SuppressLint("SetTextI18n")
 	public View startFragment(LayoutInflater inflater, ViewGroup container,
 							  int layout) {
 		View parentView = inflater.inflate(layout, container, false);
 		dataBase = ((PracticeActivity) requireActivity()).dataBase;
 		textView = parentView.findViewById(R.id.textView);
+		levelTextView = parentView.findViewById(R.id.levelTextView);
 		check = parentView.findViewById(R.id.check);
 		check.setOnClickListener(view -> {
 			if (check.getText().toString().equals(getString(R.string.next))){
 				generatePractice(getContext());
+				levelTextView.setText("Level " + SettingsActivity.getUserLevel(getContext(), currentPractice.getType()));
 				check.setText(R.string.check);
 				emptyInputViews();
 			} else {
@@ -85,6 +93,7 @@ public abstract class AbstractPracticeFragment extends Fragment {
 			}
 		});
 		generatePractice(getContext());
+		levelTextView.setText("Level " + SettingsActivity.getUserLevel(getContext(), currentPractice.getType()));
 		getInputViews(parentView);
 		return parentView;
 	}

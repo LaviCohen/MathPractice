@@ -29,7 +29,7 @@ public class UsersHelper extends DataBaseHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase sqLiteDatabase) {
-		String query = "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, profile_image BLOB, hat_x INTEGER, hat_y INTEGER, hat_size INTEGER, hat_ID INTEGER, level_type_0 INTEGER, level_type_1 INTEGER);";
+		String query = "CREATE TABLE users (username TEXT PRIMARY KEY, password TEXT, profile_image BLOB, hat_x INTEGER, hat_y INTEGER, hat_size INTEGER, hat_ID INTEGER, level_type_0 INTEGER, level_type_1 INTEGER);";
 		sqLiteDatabase.execSQL(query);
 	}
 

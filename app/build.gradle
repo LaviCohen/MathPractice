@@ -4,14 +4,14 @@ plugins {
 
 android {
     namespace 'com.example.mathpractice'
-    compileSdk 33
+    compileSdk 32
 
     defaultConfig {
 
         multiDexEnabled true
         applicationId "com.example.mathpractice"
         minSdk 19
-        targetSdk 33
+        targetSdk 32
         versionCode 1
         versionName "1.0"
 

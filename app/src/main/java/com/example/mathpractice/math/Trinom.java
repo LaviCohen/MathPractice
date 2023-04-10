@@ -77,24 +77,42 @@ public class Trinom extends AbstractPractice{
      * @return generated practice as required.
      * */
     public static Trinom generateTrinom(int level) {
+        //Creating random object for number generations
         Random rnd = new Random();
+        //Defining the parameters
         double a = 0, b = 0, c = 0;
         if (level == 1) {
+            //Level 1 practice generation
+            //Picking integer solution between 0-9
             double solution1 = rnd.nextInt(10);
+            //Setting a (the factor of X squared) to 1.
             a = 1;
+            //Picking integer b (the factor of  X) between 1-10
             b = rnd.nextInt(9) + 1;
+            //Completing c which will correct the solution has been chosen before
             c = -(solution1 * solution1 + solution1 * b);
         } else if (level == 2) {
+            //Level 2 practice generation
+            //Picking integer solution between 0-9
             double solution1 = rnd.nextInt(10);
+            //Setting a (the factor of X squared) to 1.
             a = 1;
+            //Picking integer with possible half for b (the factor of X) between (-5)-(4.5)
             b = (rnd.nextInt(20) - 10) / 2.0;
+            //Completing c which will correct the solution has been chosen before
             c = -(solution1 * solution1 + solution1 * b);
         } else if (level == 3) {
+            //Level 3 practice generation
+            //Picking integer solution between (-10)-(9)
             double solution1 = (rnd.nextInt(20) - 10);
-            a = rnd.nextInt(10);
+            //Picking integer a (the factor of X squared) between 1-10
+            a = rnd.nextInt(10) + 1;
+            //Picking integer with possible half for b (the factor of X) between (-5)-(4.5)
             b = (rnd.nextInt(20) - 10) / 2.0;
+            //Completing c which will correct the solution has been chosen before
             c = -(a * solution1 * solution1 + solution1 * b);
         }
+        //Returning the new generated Trinom
         return new Trinom(level, a, b, c);
     }
 
