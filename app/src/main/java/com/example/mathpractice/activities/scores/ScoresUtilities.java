@@ -80,7 +80,7 @@ public class ScoresUtilities {
 	 * @param type the type to update its scores.
 	 * @param level the level to update its scores.
 	 * @param calculation the current scores calculation method.
-	 * @return if the scores update requires level-up.
+	 * @return true if the scores update requires level-up.
 	 * */
 	public static boolean updateScores(Context context, int type, int level, String calculation) {
 		PracticesHelper dataBase = new PracticesHelper(context);
@@ -95,7 +95,8 @@ public class ScoresUtilities {
 		c.moveToFirst();
 		ScoresActivity.scores[type][level - 1] = ((int)(c.getDouble(0) * 10000))/100.0;
 		c.close();
-		if (level < 3 && ScoresActivity.scores[type][level - 1] > 80.0) {
+		if (level < 3 && ScoresActivity.scores[type][level - 1] >
+				PreferenceManager.getDefaultSharedPreferences(context).getInt("levelUpScore", 80)) {
 			c = dataBase.execSQLForReading("SELECT COUNT(success) FROM (SELECT success FROM practices_done_type_" + type + "_user_" +
 					user + " WHERE level = " + level + ");");
 			c.moveToFirst();

@@ -34,4 +34,10 @@
         app:entries="@array/CalculationsNames"
         app:entryValues="@array/CalculationValues"
         />
+
+    <Preference
+        app:key="levelUpScore"
+        app:title="Score Required for Level-Up"
+        app:defaultValue="80"
+        />
 </PreferenceScreen>

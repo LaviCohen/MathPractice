@@ -60,13 +60,13 @@ public class PracticeActivity extends AppCompatActivity {
 		remindMeLaterButton.setOnClickListener(view -> {
 			Dialog d = new Dialog(PracticeActivity.this);
 			d.setTitle("Pick Number");
-			d.setContentView(R.layout.number_picker_dialog_layout);
+			d.setContentView(R.layout.number_picker_alarm_dialog_layout);
 			Button ok = d.findViewById(R.id.set_button);
 			Button cancel = d.findViewById(R.id.cancel_button);
 			NumberPicker np = d.findViewById(R.id.number_picker);
-			np.setMinValue(0);
-			np.setMaxValue(300);
+			np.setMinValue(1);
 			np.setValue(5);
+			np.setWrapSelectorWheel(false);
 			ok.setOnClickListener(v -> {
 				MyAlarmManager.setAlarm(PracticeActivity.this, np.getValue());
 				d.dismiss();

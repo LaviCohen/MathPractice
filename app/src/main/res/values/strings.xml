@@ -36,5 +36,8 @@
     <string name="minutes">minutes</string>
     <string name="settings_dots">Settings:</string>
     <string name="level_error">Level error</string>
+    <string name="pick_your_level_up_score_dots">Pick Your Level-Up Score:</string>
+    <string name="cancel">Cancel</string>
+    <string name="set">Set</string>
 
 </resources>
