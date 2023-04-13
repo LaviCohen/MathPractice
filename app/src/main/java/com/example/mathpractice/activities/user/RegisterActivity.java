@@ -1,7 +1,6 @@
 package com.example.mathpractice.activities.user;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.mathpractice.R;
@@ -27,7 +27,7 @@ import com.example.mathpractice.sqlDataBase.UsersHelper;
 /**
  * This activity is the activity to create new user.
  * */
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends AppCompatActivity {
 
 	/**
 	 * The permission code for camera usage.
@@ -84,6 +84,7 @@ public class RegisterActivity extends Activity {
 			}
 		});
 		setTitle("Register");
+
 	}
 
 	/**
