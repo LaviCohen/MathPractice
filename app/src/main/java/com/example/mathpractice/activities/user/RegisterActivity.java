@@ -149,7 +149,7 @@ public class RegisterActivity extends AppCompatActivity {
 	 * */
 	@Override
 	public void onBackPressed() {
-		gotoPracticeActivity();
+		gotoUserPageActivity();
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class RegisterActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 		if (item.getItemId() == R.id.back_menu_option) {
-			gotoPracticeActivity();
+			gotoUserPageActivity();
 		}
 		return true;
 	}
@@ -166,8 +166,8 @@ public class RegisterActivity extends AppCompatActivity {
 	/**
 	 * Method to go back to practice activity, called when back button is pressed.
 	 * */
-	public void gotoPracticeActivity(){
-		Intent i = new Intent(RegisterActivity.this, PracticeActivity.class);
+	public void gotoUserPageActivity(){
+		Intent i = new Intent(RegisterActivity.this, UserPageActivity.class);
 		startActivity(i);
 		finish();
 	}
