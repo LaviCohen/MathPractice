@@ -65,6 +65,7 @@ public class PracticeActivity extends AppCompatActivity {
 			Button cancel = d.findViewById(R.id.cancel_button);
 			NumberPicker np = d.findViewById(R.id.number_picker);
 			np.setMinValue(1);
+			np.setMaxValue(100);
 			np.setValue(5);
 			np.setWrapSelectorWheel(false);
 			ok.setOnClickListener(v -> {
