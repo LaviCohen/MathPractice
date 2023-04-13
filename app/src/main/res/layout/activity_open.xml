@@ -33,11 +33,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivAppLogo" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bLetsGo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Let's Go!"
+        android:background="@drawable/custom_button_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.user.RegisterActivity">
-
+    tools:context=".activities.user.RegisterActivity"
+    android:background="@mipmap/ic_registration_background_background">
 
     <ImageView
         android:id="@+id/myPhoto"
@@ -13,39 +14,49 @@
         android:layout_width="0dp"
         android:layout_height="300sp"
         android:layout_marginTop="32dp"
+        android:padding="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
         android:contentDescription="@string/my_profile" />
 
-    <TextView
-        android:id="@+id/title"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/rotateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/welcome_please_fill_the_fields_below"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/finish_reg_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/finish_registration"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/PickFromGalleryButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Pick From Gallery"
+        android:text="Rotate"
+        android:background="@drawable/custom_button_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myPhoto" />
+
+    <LinearLayout
+        android:id="@+id/takePhotoButtonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rotateButton"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_margin="10dp">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/PickFromGalleryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pick From Gallery"
+            android:background="@drawable/custom_button_background"
+            android:layout_margin="15dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/takePhotoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/take_photo"
+            android:layout_margin="15dp"
+            android:background="@drawable/custom_button_background" />
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/editTextUsername"
@@ -58,7 +69,6 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/takePhotoButton" />
 
@@ -66,7 +76,6 @@
         android:id="@+id/editTextPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
         android:autofillHints="password"
         android:ems="10"
         android:hint="@string/password"
@@ -75,25 +84,17 @@
         app:layout_constraintBottom_toTopOf="@+id/finish_reg_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PickFromGalleryButton" />
+        app:layout_constraintTop_toBottomOf="@+id/takePhotoButtonsLayout" />
 
-    <Button
-        android:id="@+id/takePhotoButton"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/finish_reg_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/take_photo"
+        android:text="@string/finish_registration"
+        android:background="@drawable/custom_button_background"
+        android:layout_margin="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PickFromGalleryButton" />
-
-    <Button
-        android:id="@+id/rotateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rotate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myPhoto" />
-
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

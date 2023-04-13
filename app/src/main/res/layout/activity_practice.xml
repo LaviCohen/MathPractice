@@ -14,11 +14,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/remind_me_later_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/remind_me_later"
+        android:background="@drawable/custom_button_background"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_container"
         app:layout_constraintTop_toTopOf="@+id/bottom_nav_practice_menu" />
     <com.google.android.material.bottomnavigation.BottomNavigationView
