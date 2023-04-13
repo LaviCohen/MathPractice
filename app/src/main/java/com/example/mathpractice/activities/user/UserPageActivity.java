@@ -29,7 +29,6 @@ import com.example.mathpractice.R;
 import com.example.mathpractice.activities.practice.PracticeActivity;
 import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.cameraNpictures.PictureUtilities;
-import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 import com.example.mathpractice.sqlDataBase.UsersHelper;
 
 /**

@@ -83,6 +83,7 @@ public class RegisterActivity extends Activity {
 				imageView.setImageBitmap(userPicture);
 			}
 		});
+		setTitle("Register");
 	}
 
 	/**

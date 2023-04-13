@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.user.RegisterActivity"
-    android:background="@mipmap/ic_registration_background_background">
+    android:background="@mipmap/ic_register_background_foreground">
 
     <ImageView
         android:id="@+id/myPhoto"
