@@ -192,15 +192,31 @@ public class UserPageActivity extends AppCompatActivity {
 		finish();
 	}
 
+	/**
+	 * This method inflates the xml menu file to the activity's menu.
+	 * @param menu the menu to inflate to.
+	 * @return true - if the menu has been inflated successfully.
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.back_menu, menu);
 		return true;
 	}
+
+	/**
+	 * This method tries to log in to the required user.
+	 * Checks if the user's password match the given password.
+	 * If yes, call <code>setUser</code> to log in.
+	 * @param username the user to log in to.
+	 * @param password its password.
+	 * @param usersHelper an active copy of {@link UsersHelper}.
+	 * @return true - if the user logged in successfully.
+	 * <br/> false - if the password isn't correct.
+	 */
 	@SuppressLint("Range")
-	public boolean tryToLogin(String username, String password, DataBaseHelper dbh) {
-		Cursor c = dbh.execSQLForReading("SELECT password FROM users WHERE username = '" + username + "';");
+	private boolean tryToLogin(String username, String password, UsersHelper usersHelper) {
+		Cursor c = usersHelper.execSQLForReading("SELECT password FROM users WHERE username = '" + username + "';");
 		c.moveToFirst();
 		if (!c.getString(c.getColumnIndex("password")).equals(password)) {
 			c.close();
@@ -209,9 +225,14 @@ public class UserPageActivity extends AppCompatActivity {
 		c.close();
 		return true;
 	}
+
+	/**
+	 * This method change the current logged in user.
+	 * @param context the current active context.
+	 * @param username the username to log in.
+	 */
 	public static void setUser(Context context, String username){
 		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-		editor.putString("user", username);
-		editor.apply();
+		editor.putString("user", username).apply();
 	}
 }

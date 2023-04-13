@@ -7,6 +7,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.example.mathpractice.R;
+import com.example.mathpractice.activities.practice.PracticeActivity;
 import com.example.mathpractice.cameraNpictures.CameraUtilities;
 import com.example.mathpractice.cameraNpictures.PictureUtilities;
 import com.example.mathpractice.sqlDataBase.UsersHelper;
@@ -136,5 +140,45 @@ public class RegisterActivity extends Activity {
 		} else {
 			System.out.println("No Photo");
 		}
+	}
+
+	/**
+	 * Method to go back to practice activity when back navigation button is pressed.
+	 * */
+	@Override
+	public void onBackPressed() {
+		gotoPracticeActivity();
+	}
+
+	/**
+	 * Method to go back to practice activity when upper menu back button is pressed.
+	 * */
+	@Override
+	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+		if (item.getItemId() == R.id.back_menu_option) {
+			gotoPracticeActivity();
+		}
+		return true;
+	}
+
+	/**
+	 * Method to go back to practice activity, called when back button is pressed.
+	 * */
+	public void gotoPracticeActivity(){
+		Intent i = new Intent(RegisterActivity.this, PracticeActivity.class);
+		startActivity(i);
+		finish();
+	}
+
+	/**
+	 * This method inflates the xml menu file to the activity's menu.
+	 * @param menu the menu to inflate to.
+	 * @return true - if the menu has been inflated successfully.
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.back_menu, menu);
+		return true;
 	}
 }
