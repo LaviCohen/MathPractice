@@ -23,6 +23,7 @@ public class ScoresUtilities {
 	@SuppressLint("Range")
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	public static RecyclerView.Adapter getAdapter(Context context, int type, boolean full) {
+
 		PracticesHelper practicesHelper = new PracticesHelper(context);
 		RecyclerView.Adapter recViewAdapter;
 		String user = PreferenceManager.getDefaultSharedPreferences(context).getString("user", "Local");
@@ -32,14 +33,15 @@ public class ScoresUtilities {
 		int maxLevel = c.getInt(c.getColumnIndex("MAX(level)"));
 		c.close();
 
-		if (ScoresActivity.scores == null) {
-			String calculation = PreferenceManager.getDefaultSharedPreferences(context).getString("calculation", "all");
-			for (int i = 0; i < maxLevel; i++) {
-				updateScores(context, type,i + 1, calculation);
-			}
-		}
 		if (maxLevel == 0){
 			return null;
+		}
+
+		//Updates scores array
+		String calculation = PreferenceManager.getDefaultSharedPreferences(context).getString("calculation", "all");
+		for (int i = 0; i < maxLevel; i++) {
+			System.out.println("Iteration " + i);
+			updateScores(context, type,i + 1, calculation);
 		}
 
 		ArrayList list = new ArrayList<>();
@@ -47,6 +49,7 @@ public class ScoresUtilities {
 		if (!full) {
 			recViewAdapter = new LevelsRecViewAdapter();
 			for (int i = 0; i < maxLevel; i++){
+				System.out.println("Score for level " + (i + 1) + " is " + ScoresActivity.scores[type][i]);
 				list.add(new LevelsRecViewAdapter.Level(i + 1 + "", ScoresActivity.scores[type][i] + ""));
 			}
 		} else {
@@ -85,7 +88,7 @@ public class ScoresUtilities {
 	public static boolean updateScores(Context context, int type, int level, String calculation) {
 		PracticesHelper dataBase = new PracticesHelper(context);
 		if (ScoresActivity.scores == null) {
-			ScoresActivity.scores = new double[3][3];
+			ScoresActivity.scores = new double[2][3];
 		}
 		String user = PreferenceManager.getDefaultSharedPreferences(context).getString("user", "Local");
 		Cursor c = dataBase.execSQLForReading(
@@ -93,7 +96,9 @@ public class ScoresUtilities {
 						user  + " WHERE level = " + level +
 						(calculation.equals("all") ? "" : " ORDER BY id DESC limit(" + Integer.parseInt(calculation) + ")") + ")");
 		c.moveToFirst();
+		System.out.print("Change from " + ScoresActivity.scores[type][level - 1] + " to ");
 		ScoresActivity.scores[type][level - 1] = ((int)(c.getDouble(0) * 10000))/100.0;
+		System.out.println(ScoresActivity.scores[type][level - 1]);
 		c.close();
 		if (level < 3 && ScoresActivity.scores[type][level - 1] >
 				PreferenceManager.getDefaultSharedPreferences(context).getInt("levelUpScore", 80)) {
