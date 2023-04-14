@@ -50,6 +50,7 @@ public abstract class AbstractPracticeFragment extends Fragment {
 	protected PracticesHelper dataBase;
 	/**
 	 * This method initialize the common things to both of the practice fragment.
+//	 * That includes the wrapping functionality, such as inserting data to the database and changing the practice.
 	 * @param inflater used to inflate the layout file to this fragment.
 	 * @param container the {@link ViewGroup} who will be the parent of the inflated parent view.
 	 * @param layout the layout of the new fragment.

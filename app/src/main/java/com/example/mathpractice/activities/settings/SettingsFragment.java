@@ -26,10 +26,15 @@ import java.util.Objects;
  * */
 public class SettingsFragment extends PreferenceFragmentCompat {
 
+	/**
+	 * Creates the fragment and making the functionality for all of its preferences.
+	 * @param savedInstanceState default android parameter.
+	 * @param rootKey the root key of the preferences to display.
+	 */
 	@Override
 	public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
 		setPreferencesFromResource(R.xml.root_preferences, rootKey);
-		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.requireContext());
 		Preference userPreference = findPreference("user");
 		assert userPreference != null;
 		userPreference.setSummary(Objects.requireNonNull(userPreference.getSharedPreferences()).getString("user", "Local"));

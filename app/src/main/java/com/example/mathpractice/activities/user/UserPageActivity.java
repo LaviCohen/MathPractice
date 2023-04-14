@@ -48,6 +48,7 @@ public class UserPageActivity extends AppCompatActivity {
 
 	/**
 	 * OnCreate method of the screen, part of its life-cycle.
+	 * Initializing the data views and the hats and buttons with their functionality.
 	 * @param savedInstanceState default android param.
 	 */
 	@SuppressLint("SetTextI18n")
@@ -192,9 +193,9 @@ public class UserPageActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * This method inflates the xml menu file to the activity's menu.
-	 * @param menu the menu to inflate to.
-	 * @return true - if the menu has been inflated successfully.
+	 * Inflates the menu into the activity.
+	 * @param menu the activity menu to inflate into.
+	 * @return true - if the menu was inflated successfully.
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

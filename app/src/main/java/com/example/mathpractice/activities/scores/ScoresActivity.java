@@ -53,6 +53,8 @@ public class ScoresActivity extends AppCompatActivity {
 
 	/**
 	 * OnCreate method of the screen, part of its life-cycle.
+	 * Initialize the database, the title and the checkbox and the
+	 * bottomNavigationView with their functionalities.
 	 * @param savedInstanceState default android param.
 	 */
 	@Override
@@ -151,6 +153,11 @@ public class ScoresActivity extends AppCompatActivity {
 		finish();
 	}
 
+	/**
+	 * Inflates the menu into the activity.
+	 * @param menu the activity menu to inflate into.
+	 * @return true - if the menu was inflated successfully.
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();

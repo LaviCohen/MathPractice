@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.widget.Toast;
 
 import com.example.mathpractice.R;
@@ -16,6 +15,11 @@ import com.example.mathpractice.activities.practice.PracticeActivity;
  * */
 public class MyBroadcastReceiver extends BroadcastReceiver {
 
+	/**
+	 * This method recieves the signal from the system for alarm time passed ,and notify the user.
+	 * @param context the current context.
+	 * @param intent the intent given.
+	 */
 	@SuppressLint("UnsafeProtectedBroadcastReceiver")
 	@Override
 	public void onReceive(Context context, Intent intent) {

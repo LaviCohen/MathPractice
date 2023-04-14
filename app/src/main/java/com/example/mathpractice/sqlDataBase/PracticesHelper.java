@@ -1,23 +1,13 @@
 package com.example.mathpractice.sqlDataBase;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
-import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mathpractice.activities.scores.LevelsRecViewAdapter;
-import com.example.mathpractice.activities.scores.PracticesRecViewAdapter;
-import com.example.mathpractice.activities.scores.ScoresActivity;
 import com.example.mathpractice.math.AbstractPractice;
 import com.example.mathpractice.math.MulTable;
-
-import java.util.ArrayList;
 
 /**
  * Subclass of {@link DataBaseHelper}, used to deal with specifically the practices tables.
@@ -25,10 +15,18 @@ import java.util.ArrayList;
 public class PracticesHelper extends DataBaseHelper {
 
 
+	/**
+	 * Basic inherited constructor.
+	 * @param context the current context.
+	 */
 	public PracticesHelper(@Nullable Context context) {
 		super(context);
 	}
 
+	/**
+	 * Initializes the tables in the database.
+	 * @param sqLiteDatabase the database.
+	 */
 	@Override
 	public void onCreate(SQLiteDatabase sqLiteDatabase) {
 		String query = "CREATE TABLE practices_done_type_0_user_Local (id INTEGER PRIMARY KEY AUTOINCREMENT, level INTEGER, practice TEXT, success INTEGER);";

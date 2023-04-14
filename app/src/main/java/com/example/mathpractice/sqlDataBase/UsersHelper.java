@@ -23,10 +23,18 @@ import java.io.ByteArrayOutputStream;
  * */
 public class UsersHelper extends DataBaseHelper{
 
+	/**
+	 * Basic inherited constructor.
+	 * @param context the current context.
+	 */
 	public UsersHelper(@Nullable Context context) {
 		super(context);
 	}
 
+	/**
+	 * Initializes the tables in the database.
+	 * @param sqLiteDatabase the database.
+	 */
 	@Override
 	public void onCreate(SQLiteDatabase sqLiteDatabase) {
 		String query = "CREATE TABLE users (username TEXT PRIMARY KEY, password TEXT, profile_image BLOB, hat_x INTEGER, hat_y INTEGER, hat_size INTEGER, hat_ID INTEGER, level_type_0 INTEGER, level_type_1 INTEGER);";

@@ -46,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 	/**
 	 * OnCreate method of the screen, part of its life-cycle.
+	 * Initializing all of the views and their functionality.
 	 * @param savedInstanceState default android param.
 	 */
 	@Override

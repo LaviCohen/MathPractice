@@ -13,10 +13,20 @@ import androidx.annotation.Nullable;
  * */
 public abstract class DataBaseHelper extends SQLiteOpenHelper {
 
+    /**
+     * Basic inherited constructor.
+     * @param context the current context.
+     */
     public DataBaseHelper(@Nullable Context context) {
         super(context, "math_practice_db", null, 1);
     }
 
+    /**
+     * This method react to updates.
+     * @param sqLiteDatabase the database.
+     * @param i default android parameter.
+     * @param i1 default android parameter.
+     */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 

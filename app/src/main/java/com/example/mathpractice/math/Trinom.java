@@ -7,9 +7,24 @@ import java.util.Random;
  * */
 public class Trinom extends AbstractPractice{
 
+    /**
+     * The solution for the multiplication.
+     * */
     public double solution1, solution2;
+
+    /**
+     * The factors of the multiplication.
+     * */
     public double a, b, c;
 
+    /**
+     * Basic constructor.
+     * @param level the level.
+     * @param a the trinom's a.
+     * @param b the trinom's a.
+     * @param c the trinom's a.
+     * @throws IllegalArgumentException if the trinom has no solution.
+     */
     public Trinom(int level, double a, double b, double c) throws IllegalArgumentException{
         super(TYPE_TRINOM, level);
         if (a == 0) {
@@ -21,6 +36,10 @@ public class Trinom extends AbstractPractice{
         this.solve();
     }
 
+    /**
+     * Converts this {@link Trinom} to mathematical expression.
+     * @return a String, represents the practice.
+     */
     @Override
     public String toExp() {
         String exp = "";
@@ -53,6 +72,9 @@ public class Trinom extends AbstractPractice{
         return exp + " = 0";
     }
 
+    /**
+     * Set the correct solution, base on the factors.
+     */
     @Override
     protected void solve() throws IllegalArgumentException{
         double underSqrt = (b * b) - (4 * a * c);
@@ -62,6 +84,20 @@ public class Trinom extends AbstractPractice{
         double sqrt = Math.sqrt(underSqrt);
         this.solution1 = round((-b + sqrt) / (2 * a), 3);
         this.solution2 = round((-b - sqrt) / (2 * a), 3);
+    }
+
+
+    /**
+     * Check the given solutions.
+     * @param solutions array of solutions (each practice type require different solutions number).
+     * @return if the solutions are correct.
+     */
+    @Override
+    public boolean check(double... solutions) {
+        solutions[0] = round(solutions[0], 3);
+        solutions[1] = round(solutions[1], 3);
+        return (solutions[0] == this.solution1 && solutions[1] == this.solution2) ||
+                (solutions[1] == this.solution1 && solutions[0] == this.solution2);
     }
 
     /**
@@ -114,13 +150,5 @@ public class Trinom extends AbstractPractice{
         }
         //Returning the new generated Trinom
         return new Trinom(level, a, b, c);
-    }
-
-    @Override
-    public boolean check(double... solutions) {
-        solutions[0] = round(solutions[0], 3);
-        solutions[1] = round(solutions[1], 3);
-        return (solutions[0] == this.solution1 && solutions[1] == this.solution2) ||
-                (solutions[1] == this.solution1 && solutions[0] == this.solution2);
     }
 }

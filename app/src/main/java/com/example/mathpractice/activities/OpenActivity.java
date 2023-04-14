@@ -21,6 +21,8 @@ public class OpenActivity extends AppCompatActivity {
 
 	/**
 	 * OnCreate method of the screen, part of its life-cycle.
+	 * Check if shall be skipped and skip if needed.
+	 * Else, initialize the button and the animation.
 	 * @param savedInstanceState default android param.
 	 */
 	@Override

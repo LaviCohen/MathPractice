@@ -13,10 +13,16 @@ public class MulTable extends AbstractPractice{
     public double solution;
 
     /**
-     * The roots of the multiplication.
+     * The factors of the multiplication.
      * */
     public double a, b;
 
+    /**
+     * Basic constructor.
+     * @param level the level.
+     * @param a the first factor.
+     * @param b the second factor.
+     */
     public MulTable(int level, double a, double b){
         super(TYPE_MUL_TABLE, level);
         this.a = a;
@@ -24,16 +30,28 @@ public class MulTable extends AbstractPractice{
         this.solve();
     }
 
+    /**
+     * Converts this {@link MulTable} to mathematical expression.
+     * @return a String, represents the practice.
+     */
     @Override
     public String toExp() {
         return fn(a) + " x " + fn(b);
     }
 
+    /**
+     * Set the correct solution, base on the factors.
+     */
     @Override
     protected void solve() {
         this.solution = round(this.a * this.b, 3);
     }
 
+    /**
+     * Check the given solutions.
+     * @param solutions array of solutions (each practice type require different solutions number).
+     * @return if the solutions are correct.
+     */
     @Override
     public boolean check(double... solutions) {
         return this.solution == solutions[0];
@@ -65,7 +83,7 @@ public class MulTable extends AbstractPractice{
         } else if (level == 2) {
             //Level 2 practice generation
             //Both factors might be numbers with possible half between 0.5-10, one of them must be
-            a = (rnd.nextInt(20)/2 * 2 + 1) / 2.0;
+            a = (Math.round(rnd.nextInt(20)/2.0) * 2 + 1) / 2.0;
             b = (rnd.nextInt(20) + 1) / 2.0;
         } else if (level == 3) {
             //Level 3 practice generation

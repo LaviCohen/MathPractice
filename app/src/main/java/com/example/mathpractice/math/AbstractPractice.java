@@ -29,16 +29,28 @@ public abstract class AbstractPractice {
 	 * */
 	final int level;
 
-
+	/**
+	 * Basic constructor.
+	 * @param type the type.
+	 * @param level the level.
+	 */
 	public AbstractPractice(int type, int level) {
 		this.type = type;
 		this.level = level;
 	}
 
+	/**
+	 * Type's getter.
+	 * @return the type.
+	 */
 	public int getType() {
 		return type;
 	}
 
+	/**
+	 * Level's getter.
+	 * @return the level.
+	 */
 	public int getLevel() {
 		return level;
 	}

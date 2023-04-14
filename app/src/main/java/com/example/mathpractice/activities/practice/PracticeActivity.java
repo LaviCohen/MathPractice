@@ -44,6 +44,8 @@ public class PracticeActivity extends AppCompatActivity {
 
 	/**
 	 * OnCreate method of the screen, part of its life-cycle.
+	 * This method initializes the database, the remindMeLaterButton and the bottomNavigationView,
+	 * including the practice fragments functionality.
 	 * @param savedInstanceState default android param.
 	 */
 	@Override
@@ -143,8 +145,10 @@ public class PracticeActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * Method that inflates the upper menu for this activity.
-	 * */
+	 * Inflates the menu into the activity.
+	 * @param menu the activity menu to inflate into.
+	 * @return true - if the menu was inflated successfully.
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
