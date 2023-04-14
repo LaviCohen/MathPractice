@@ -157,12 +157,16 @@
                 android:id="@+id/username_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="User Name" />
+                android:text="User Name"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/user_level_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:text="User Level" />
         </LinearLayout>
     </LinearLayout>

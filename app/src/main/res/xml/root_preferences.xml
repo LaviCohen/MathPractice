@@ -19,7 +19,7 @@
 
     <ListPreference
         app:key="defaultPractice"
-        app:title="Default Practice Shown in Practice Screen"
+        app:title="Default Practice Shown"
         app:defaultValue="0"
         app:summary="%s"
         app:entries="@array/DefaultPracticeNames"
