@@ -19,6 +19,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="PreferenceScreen" parent="Theme.MathPractice">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="Theme.MathPractice.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.MathPractice.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

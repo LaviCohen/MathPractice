@@ -14,7 +14,7 @@
     <TextView
         android:id="@+id/level"
         android:layout_width="0dp"
-        android:layout_weight="0.2"
+        android:layout_weight="0.1"
         android:layout_height="match_parent"
         android:textColor="@color/black"/>
     <TextView
@@ -27,7 +27,7 @@
     <TextView
         android:id="@+id/practice"
         android:layout_width="0dp"
-        android:layout_weight="0.25"
+        android:layout_weight="0.4"
         android:layout_height="match_parent"
         android:textColor="@color/black"/>
     <TextView
