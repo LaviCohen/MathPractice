@@ -63,18 +63,19 @@ public class MyNotificationManager {
 	 * @param content the notification's content.
 	 * @param intent the intent which will be passed when the user click on the notification.
 	 * */
-	@RequiresApi(api = Build.VERSION_CODES.M)
 	public static void postNotification(Context context, int icon, String  title, String content, Intent intent){
 		if (firstNotification) {
 			init(context);
 		}
-		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
 				.setSmallIcon(icon)
 				.setContentTitle(title)
 				.setContentText(content)
-				.setPriority(NotificationCompat.PRIORITY_DEFAULT)
-				.setContentIntent(pendingIntent);
+				.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+			builder.setContentIntent(pendingIntent);
+		}
 		NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 		notificationManager.notify(id++, builder.build());
 	}
