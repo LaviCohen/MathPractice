@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import androidx.annotation.Nullable;
 
 import com.example.mathpractice.math.AbstractPractice;
-import com.example.mathpractice.math.MulTable;
 
 /**
  * Subclass of {@link DataBaseHelper}, used to deal with specifically the practices tables.
@@ -48,9 +47,6 @@ public class PracticesHelper extends DataBaseHelper {
 		cv.put("practice", practice.toExp());
 		cv.put("success", success);
 		System.out.println("Inserting " + cv);
-		if (practice instanceof MulTable) {
-			System.out.println("Mul");
-		}
 		String table = "practices_done_type_" + practice.getType() + "_user_" + user;
 		System.out.println("Table: " + table);
 		db.insert(table, null, cv);

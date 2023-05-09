@@ -17,7 +17,6 @@ import com.example.mathpractice.activities.practice.PracticeActivity;
 import com.example.mathpractice.activities.scores.ScoresUtilities;
 import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.math.AbstractPractice;
-import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 import com.example.mathpractice.sqlDataBase.PracticesHelper;
 
 /**
@@ -32,7 +31,7 @@ public abstract class AbstractPracticeFragment extends Fragment {
 	/**
 	 * The {@link TextView} that displays the currentPractice.
 	 * */
-	protected TextView textView;
+	protected TextView practiceTextView;
 	/**
 	 * The {@link TextView} that displays the level of the currentPractice.
 	 * */
@@ -45,7 +44,7 @@ public abstract class AbstractPracticeFragment extends Fragment {
 	protected Button check;
 
 	/**
-	 * The {@link DataBaseHelper} object which will be used in this activity, created once on startFragment.
+	 * The {@link com.example.mathpractice.sqlDataBase.DataBaseHelper} object which will be used in this activity, created once on startFragment.
 	 * */
 	protected PracticesHelper dataBase;
 	/**
@@ -60,8 +59,8 @@ public abstract class AbstractPracticeFragment extends Fragment {
 	public View startFragment(LayoutInflater inflater, ViewGroup container,
 							  int layout) {
 		View parentView = inflater.inflate(layout, container, false);
-		dataBase = ((PracticeActivity) requireActivity()).dataBase;
-		textView = parentView.findViewById(R.id.textView);
+		dataBase = ((PracticeActivity) requireActivity()).getDataBase();
+		practiceTextView = parentView.findViewById(R.id.textView);
 		levelTextView = parentView.findViewById(R.id.levelTextView);
 		check = parentView.findViewById(R.id.check);
 		check.setOnClickListener(view -> {
@@ -78,7 +77,7 @@ public abstract class AbstractPracticeFragment extends Fragment {
 					if (checkValue == 0) {
 						showFailText();
 					} else {
-						textView.setText(R.string.well_done);
+						practiceTextView.setText(R.string.well_done);
 					}
 					dataBase.addPractice(currentPractice, PreferenceManager.getDefaultSharedPreferences(
 							AbstractPracticeFragment.this.requireContext()).getString("user", "Local"), checkValue == 1);

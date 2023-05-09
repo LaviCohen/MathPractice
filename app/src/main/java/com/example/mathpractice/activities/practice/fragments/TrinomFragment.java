@@ -60,7 +60,7 @@ public class TrinomFragment extends AbstractPracticeFragment{
 	protected void showFailText() {
 		String text = String.format(getString(R.string.correct_answers), currentPractice.toExp(),
 				AbstractPractice.fn(((Trinom)currentPractice).solution1), AbstractPractice.fn(((Trinom)currentPractice).solution2));
-		textView.setText(text);
+		practiceTextView.setText(text);
 	}
 
 	/**
@@ -110,6 +110,6 @@ public class TrinomFragment extends AbstractPracticeFragment{
 		} catch (IllegalArgumentException iae) {
 			generatePractice(context);
 		}
-		this.textView.setText(currentPractice.toExp() + "\nX = ?");
+		this.practiceTextView.setText(currentPractice.toExp() + "\nX = ?");
 	}
 }

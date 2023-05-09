@@ -54,7 +54,7 @@ public class MulTableFragment extends AbstractPracticeFragment {
 	 */
 	@Override
 	protected void showFailText() {
-		textView.setText(String.format("Wrong, the correct answer for\n%s\nis %s",
+		practiceTextView.setText(String.format("Wrong, the correct answer for\n%s\nis %s",
 				currentPractice.toExp(), AbstractPractice.fn(((MulTable)currentPractice).solution)));
 	}
 
@@ -99,6 +99,6 @@ public class MulTableFragment extends AbstractPracticeFragment {
 	@SuppressLint("SetTextI18n")
 	public void generatePractice(Context context) {
 		currentPractice = MulTable.generateMulTable(SettingsActivity.getUserLevel(context, AbstractPractice.TYPE_MUL_TABLE));
-		this.textView.setText(currentPractice.toExp());
+		this.practiceTextView.setText(currentPractice.toExp());
 	}
 }

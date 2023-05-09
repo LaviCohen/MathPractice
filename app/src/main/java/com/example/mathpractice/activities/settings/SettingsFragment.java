@@ -8,15 +8,12 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.NumberPicker;
 
-import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
 import com.example.mathpractice.R;
-import com.example.mathpractice.activities.practice.PracticeActivity;
 import com.example.mathpractice.activities.scores.ScoresUtilities;
-import com.example.mathpractice.reminder.MyAlarmManager;
 import com.example.mathpractice.sqlDataBase.PracticesHelper;
 
 import java.util.Objects;

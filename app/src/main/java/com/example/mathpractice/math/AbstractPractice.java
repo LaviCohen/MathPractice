@@ -1,8 +1,5 @@
 package com.example.mathpractice.math;
 
-import com.example.mathpractice.activities.practice.fragments.MulTableFragment;
-import com.example.mathpractice.activities.practice.fragments.TrinomFragment;
-
 /**
  * This is the abstract class that represents a practice, parent of {@link MulTable} and {@link Trinom}.
  * ALso includes static utility functions, such as fn() and round().

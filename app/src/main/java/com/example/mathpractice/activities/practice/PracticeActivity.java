@@ -22,8 +22,8 @@ import com.example.mathpractice.activities.user.UserPageActivity;
 import com.example.mathpractice.activities.scores.ScoresActivity;
 import com.example.mathpractice.activities.settings.SettingsActivity;
 import com.example.mathpractice.reminder.MyAlarmManager;
-import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 import com.example.mathpractice.sqlDataBase.PracticesHelper;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
@@ -32,15 +32,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class PracticeActivity extends AppCompatActivity {
 
 	/**
-	 * The {@link DataBaseHelper} object which will be used in this activity, created once on onCreate.
+	 * The {@link PracticesHelper} object which will be used in this activity, created once on onCreate.
 	 * */
-	public PracticesHelper dataBase = null;
+	private PracticesHelper dataBase = null;
 
 	/**
 	 * The current {@link AbstractPracticeFragment} currently shown on the screen, either {@link MulTableFragment} or
 	 * {@link TrinomFragment}.
 	 * */
-	public AbstractPracticeFragment currentFragment = null;
+	private AbstractPracticeFragment currentFragment = null;
 
 	/**
 	 * OnCreate method of the screen, part of its life-cycle.
@@ -154,5 +154,9 @@ public class PracticeActivity extends AppCompatActivity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.practice_activity_menu, menu);
 		return true;
+	}
+
+	public PracticesHelper getDataBase() {
+		return dataBase;
 	}
 }

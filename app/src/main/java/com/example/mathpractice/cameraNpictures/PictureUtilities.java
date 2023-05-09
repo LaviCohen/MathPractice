@@ -11,7 +11,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
-import com.example.mathpractice.sqlDataBase.DataBaseHelper;
 import com.example.mathpractice.sqlDataBase.UsersHelper;
 
 /**
