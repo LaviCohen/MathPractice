@@ -50,7 +50,7 @@ public class PictureUtilities {
 	 * @return a bitmap of the base image with the required hat.
 	 * */
 	public static Bitmap putHat(Context context, String username, Bitmap baseUsersImage){
-		Rect hatRect = UsersHelper.getHatRect(new UsersHelper(context), username);
+		Rect hatRect = new UsersHelper(context).getHatRect(username);
 		if (hatRect == null) {
 			System.out.println("No hat rect");
 			return baseUsersImage;

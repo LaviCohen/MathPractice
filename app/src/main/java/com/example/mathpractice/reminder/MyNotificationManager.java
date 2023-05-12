@@ -27,7 +27,7 @@ public class MyNotificationManager {
 	/**
 	 * The notification channel ID.
 	 * */
-	private static final String CHANNEL_ID = "MyChannelID";
+	private static final String CHANNEL_ID = "MathPracticeNotChannel";
 
 	/**
 	 * This method initializes this class utility, create all needed such as channel etc.
@@ -35,8 +35,8 @@ public class MyNotificationManager {
 	 * */
 	public static void init(Context context){
 		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-			CharSequence name = "MyChannel";
-			String description = "My Description";
+			CharSequence name = "MathPracticeNotificationChannel";
+			String description = "Used by Math Practice app to post notifications";
 			int importance = NotificationManager.IMPORTANCE_DEFAULT;
 			NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
 			channel.setDescription(description);

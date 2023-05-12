@@ -112,7 +112,6 @@ public class UsersHelper extends DataBaseHelper{
 
 	/**
 	 * Get this specific user hat data, as abused {@link Rect} object.
-	 * @param usersHelper the database to use.
 	 * @param username the user' username.
 	 * @return Rect object, when the vars are arranged as follows:
 	 * <table>
@@ -124,24 +123,24 @@ public class UsersHelper extends DataBaseHelper{
 	 * <tr><td>bottom</td><td>Hat ID</td></tr>
 	 * </table>
 	 * */
-	public static Rect getHatRect(UsersHelper usersHelper, String username){
-		Cursor c = usersHelper.execSQLForReading(
+	public Rect getHatRect(String username){
+		Cursor c = this.execSQLForReading(
 				"SELECT hat_ID FROM users WHERE username = '" + username + "';");
 		c.moveToFirst();
 		@SuppressLint("Range") int id = c.getInt(c.getColumnIndex("hat_ID"));
 		c.close();
-		c = usersHelper.execSQLForReading(
+		c = this.execSQLForReading(
 				"SELECT hat_size FROM users WHERE username = '" + username + "';");
 		c.moveToFirst();
 		@SuppressLint("Range") int hatSize = c.getInt(c.getColumnIndex("hat_size"));
 		c.close();
 		if (id != -1 && hatSize != 0) {
-			c = usersHelper.execSQLForReading(
+			c = this.execSQLForReading(
 					"SELECT hat_x FROM users WHERE username = '" + username + "';");
 			c.moveToFirst();
 			@SuppressLint("Range") int hatX = c.getInt(c.getColumnIndex("hat_x"));
 			c.close();
-			c = usersHelper.execSQLForReading(
+			c = this.execSQLForReading(
 					"SELECT hat_y FROM users WHERE username = '" + username + "';");
 			c.moveToFirst();
 			@SuppressLint("Range") int hatY = c.getInt(c.getColumnIndex("hat_y"));

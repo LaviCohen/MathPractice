@@ -70,15 +70,16 @@ public class PracticesRecViewAdapter extends RecyclerView.Adapter<PracticesRecVi
      * View holder class, specific for levels recycle view.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        /**
-         * the level's view.
-         */
-        private final TextView level;
 
         /**
          * the expression's view.
          */
         private final TextView exp;
+
+        /**
+         * the level's view.
+         */
+        private final TextView level;
 
         /**
          * the success's view.
@@ -124,7 +125,7 @@ public class PracticesRecViewAdapter extends RecyclerView.Adapter<PracticesRecVi
         /**
          * Whether the user succeed or not.
          */
-        boolean success;
+        public boolean success;
 
         /**
          * Basic constructor.

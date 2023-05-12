@@ -63,39 +63,44 @@ public abstract class AbstractPracticeFragment extends Fragment {
 		practiceTextView = parentView.findViewById(R.id.textView);
 		levelTextView = parentView.findViewById(R.id.levelTextView);
 		check = parentView.findViewById(R.id.check);
-		check.setOnClickListener(view -> {
-			if (check.getText().toString().equals(getString(R.string.next))){
-				generatePractice(getContext());
-				levelTextView.setText("Level " + SettingsActivity.getUserLevel(getContext(), currentPractice.getType()));
-				check.setText(R.string.check);
-				emptyInputViews();
-			} else {
-				int checkValue = checkInputs();
-				if (checkValue == -1) {//Illegal input
-					showIllegalInputToast();
-				} else {
-					if (checkValue == 0) {
-						showFailText();
-					} else {
-						practiceTextView.setText(R.string.well_done);
-					}
-					dataBase.addPractice(currentPractice, PreferenceManager.getDefaultSharedPreferences(
-							AbstractPracticeFragment.this.requireContext()).getString("user", "Local"), checkValue == 1);
-					check.setText(R.string.next);
-					String calculation = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("calculation", "all");
-					boolean levelUp = ScoresUtilities.updateScores(this.getContext(), currentPractice.getType(), currentPractice.getLevel(), calculation);
-					if (levelUp) {
-						Toast.makeText(this.getContext(), "Level-Up! You're on level " +
-								SettingsActivity.getUserGeneralLevel(AbstractPracticeFragment.this.getContext())
-										+ " now!", Toast.LENGTH_SHORT).show();
-					}
-				}
-			}
-		});
+		check.setOnClickListener(view -> check());
 		generatePractice(getContext());
 		levelTextView.setText("Level " + SettingsActivity.getUserLevel(getContext(), currentPractice.getType()));
 		getInputViews(parentView);
 		return parentView;
+	}
+	/**
+	 * This method performs the check functionality, including data store and generating new practice if needed
+	 * */
+	@SuppressLint("SetTextI18n")
+	public void check(){
+		if (check.getText().toString().equals(getString(R.string.next))){
+			generatePractice(getContext());
+			levelTextView.setText("Level " + SettingsActivity.getUserLevel(getContext(), currentPractice.getType()));
+			check.setText(R.string.check);
+			emptyInputViews();
+		} else {
+			int checkValue = checkInputs();
+			if (checkValue == -1) {//Illegal input
+				showIllegalInputToast();
+			} else {
+				if (checkValue == 0) {
+					showFailText();
+				} else {
+					practiceTextView.setText(R.string.well_done);
+				}
+				dataBase.addPractice(currentPractice, PreferenceManager.getDefaultSharedPreferences(
+						AbstractPracticeFragment.this.requireContext()).getString("user", "Local"), checkValue == 1);
+				check.setText(R.string.next);
+				String calculation = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("calculation", "all");
+				boolean levelUp = ScoresUtilities.updateScores(this.getContext(), currentPractice.getType(), currentPractice.getLevel(), calculation);
+				if (levelUp) {
+					Toast.makeText(this.getContext(), "Level-Up! You're on level " +
+							SettingsActivity.getUserGeneralLevel(AbstractPracticeFragment.this.getContext())
+							+ " now!", Toast.LENGTH_SHORT).show();
+				}
+			}
+		}
 	}
 	/**
 	 * This method let each individual practice fragment to initialize its own Views, which used to input this type of practice.

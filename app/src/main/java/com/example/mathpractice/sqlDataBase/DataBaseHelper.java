@@ -28,9 +28,7 @@ public abstract class DataBaseHelper extends SQLiteOpenHelper {
      * @param i1 default android parameter.
      */
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
-    }
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
 
     /**
      * Executing reading-only SQL command.

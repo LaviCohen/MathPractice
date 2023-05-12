@@ -19,12 +19,12 @@ public abstract class AbstractPractice {
 	/**
 	 * The type of the practice.
 	 * */
-	final int type;
+	public final int type;
 
 	/**
 	 * The level of the practice.
 	 * */
-	final int level;
+	public final int level;
 
 	/**
 	 * Basic constructor.
